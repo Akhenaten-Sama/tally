@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(open -a Xcode ~/kora/ios/Runner.xcworkspace)",
+      "Bash(screencapture -x /private/tmp/claude-501/-Users-olalekan-kora/62a55376-7feb-4da9-9e4f-825e1bf8fcc1/scratchpad/screen.png)",
+      "Bash(flutter devices *)",
+      "Bash(sort -u -k2)",
+      "Bash(security find-identity *)",
+      "Bash(flutter run *)",
+      "Bash(xcrun devicectl *)",
+      "Bash(dart run *)",
+      "Bash(dart format *)",
+      "Bash(flutter analyze *)",
+      "Bash(xargs sed -i '' 's/seedIfEmpty/ensureSeeded/g')",
+      "Bash(flutter test *)",
+      "Bash(cd ~/kora && cat lib/core/errors/app_exception.dart | tail -20 && cat lib/core/utils/formatters.dart | head -8 && mkdir -p lib/features/transfers/presentation/widgets)",
+      "Bash(flutter build *)",
+      "Bash(python3 -c \"import PIL; print\\('pil', PIL.__version__\\)\")",
+      "Bash(xcrun simctl *)",
+      "Bash(dart fix *)",
+      "Bash(sed -i '' 's/≈ ₦107,465.16 a month/= ₦107,464.66 a month \\(₦716.43 per ₦100k\\)/; s/closeTo\\(10746516, 1\\)/closeTo\\(10746466, 1\\)/' test/features/mortgage/amortization_test.dart)",
+      "Bash(scripts/install_ios.sh cmb *)",
+      "Bash(/usr/libexec/PlistBuddy -c \"Print :CFBundleDisplayName\" ios/Runner/Info.plist)",
+      "Bash(bash -n scripts/install_ios.sh)",
+      "Bash(sed -i '' \"1d\" lib/core/data/app_meta.dart)",
+      "Bash(sed -i '' '1{/^$/d;}' lib/core/data/app_meta.dart)",
+      "Bash(flutter pub *)",
+      "Bash(sed -i '' \"/^import 'dart:typed_data';$/d\" lib/features/statement/data/statement_pdf.dart)",
+      "Bash(sed -i '' '1{/^$/d;}' lib/features/statement/data/statement_pdf.dart)"
+    ],
+    "additionalDirectories": [
+      "/Users/olalekan/kora/lib/features/transfers/presentation",
+      "/Users/olalekan/.claude/projects/-Users-olalekan/memory"
+    ]
+  }
+}
