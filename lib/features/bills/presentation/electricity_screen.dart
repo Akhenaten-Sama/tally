@@ -5,19 +5,32 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/errors/app_exception.dart';
 import '../../../core/money/money.dart';
 import '../../../core/theme/tally_colors.dart';
+import '../../../core/widgets/bill_illustration.dart';
 import '../data/bills_repository.dart';
+import '../data/recent_billers.dart';
 import '../domain/billers.dart';
 import 'pay_bill.dart';
 import 'widgets/bill_widgets.dart';
 
 class ElectricityScreen extends ConsumerStatefulWidget {
-  const ElectricityScreen({super.key});
+  const ElectricityScreen({super.key, this.prefill});
+
+  final BillPrefill? prefill;
 
   @override
   ConsumerState<ElectricityScreen> createState() => _ElectricityScreenState();
 }
 
 class _ElectricityScreenState extends ConsumerState<ElectricityScreen> {
+  static final _presets = [
+    2000,
+    5000,
+    10000,
+    20000,
+    50000,
+    100000,
+  ].map(Money.naira).toList();
+
   final _meterField = TextEditingController();
   final _amountField = TextEditingController();
   var _disco = Disco.ikeja;
@@ -25,6 +38,13 @@ class _ElectricityScreenState extends ConsumerState<ElectricityScreen> {
   BillCustomer? _customer;
   var _verifying = false;
   String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    final p = widget.prefill;
+    if (p != null) _apply(p);
+  }
 
   @override
   void dispose() {
@@ -35,6 +55,21 @@ class _ElectricityScreenState extends ConsumerState<ElectricityScreen> {
 
   Money get _amount =>
       Money.naira(int.tryParse(_amountField.text.replaceAll(',', '')) ?? 0);
+
+  double get _units => _amount.kobo / Disco.tariffPerKwh.kobo;
+
+  void _apply(BillPrefill p) {
+    _disco = p.disco ?? _disco;
+    _type = p.meterType ?? _type;
+    _meterField.text = p.meterNumber ?? '';
+    _amountField.text = p.amount == null ? '' : '${p.amount!.kobo ~/ 100}';
+    _customer = null;
+    _error = null;
+    // Saved meters are verified straight away.
+    if (_meterField.text.isNotEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _verify());
+    }
+  }
 
   void _reset() => setState(() {
     _customer = null;
@@ -79,10 +114,7 @@ class _ElectricityScreenState extends ConsumerState<ElectricityScreen> {
         if (customer.address != null) ('Address', customer.address!),
         ('Meter', '$meter (${type.name})'),
         if (type == MeterType.prepaid)
-          (
-            'Estimated units',
-            '${(amount.kobo / Disco.tariffPerKwh.kobo).toStringAsFixed(1)} kWh',
-          ),
+          ('Estimated units', '${_units.toStringAsFixed(1)} kWh'),
       ],
       pay: (reference) => ref
           .read(billsRepositoryProvider)
@@ -102,6 +134,8 @@ class _ElectricityScreenState extends ConsumerState<ElectricityScreen> {
     final customer = _customer;
     final canVerify =
         RegExp(r'^\d{11,13}$').hasMatch(_meterField.text) && !_verifying;
+    final hasAmount = _amount >= Money.naira(1000);
+    final saved = ref.watch(recentMetersProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Electricity')),
@@ -117,28 +151,59 @@ class _ElectricityScreenState extends ConsumerState<ElectricityScreen> {
                     : const Text('Verify meter'),
               )
             : FilledButton(
-                onPressed: _amount >= Money.naira(1000) ? _pay : null,
-                child: const Text('Continue'),
+                onPressed: hasAmount ? _pay : null,
+                child: Text(
+                  hasAmount
+                      ? 'Pay ${_amount.format(showKobo: false)}'
+                      : 'Enter an amount',
+                ),
               ),
         children: [
-          const FieldLabel('Distribution company'),
-          DropdownButtonFormField<Disco>(
-            initialValue: _disco,
-            isExpanded: true,
-            items: [
-              for (final d in Disco.values)
-                DropdownMenuItem(
-                  value: d,
-                  child: Text('${d.name} (${d.code})'),
-                ),
-            ],
-            onChanged: (d) {
-              if (d == null) return;
-              _disco = d;
-              _reset();
-            },
+          BillHeader(
+            icon: Icons.bolt_rounded,
+            leading: const BillIllustration(art: BillArt.electricity, size: 56),
+            label: customer == null
+                ? '${_disco.code} · ${_type.name}'
+                : customer.name,
+            value: customer == null
+                ? 'Buy electricity'
+                : _type == MeterType.prepaid && hasAmount
+                ? '${_units.toStringAsFixed(1)} kWh'
+                : _meterField.text,
+            detail: customer?.address ?? 'Tokens arrive instantly',
           ),
-          const FieldLabel('Meter type'),
+          if (saved.isNotEmpty) ...[
+            const SectionTitle('Saved meters'),
+            SavedBillerStrip(
+              items: saved,
+              onSelected: (item) => setState(() => _apply(item.prefill)),
+            ),
+          ],
+          const SectionTitle('Distribution company'),
+          SizedBox(
+            height: 76,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: Disco.values.length,
+              separatorBuilder: (_, _) => const SizedBox(width: 10),
+              itemBuilder: (context, i) {
+                final d = Disco.values[i];
+                return SizedBox(
+                  width: 128,
+                  child: OptionCard(
+                    title: d.code,
+                    subtitle: d.name,
+                    selected: d == _disco,
+                    onTap: () {
+                      _disco = d;
+                      _reset();
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
+          const SectionTitle('Meter'),
           SegmentedButton<MeterType>(
             segments: const [
               ButtonSegment(value: MeterType.prepaid, label: Text('Prepaid')),
@@ -150,7 +215,7 @@ class _ElectricityScreenState extends ConsumerState<ElectricityScreen> {
               _reset();
             },
           ),
-          const FieldLabel('Meter number'),
+          const SizedBox(height: 12),
           TextField(
             controller: _meterField,
             keyboardType: TextInputType.number,
@@ -159,7 +224,8 @@ class _ElectricityScreenState extends ConsumerState<ElectricityScreen> {
               LengthLimitingTextInputFormatter(13),
             ],
             decoration: InputDecoration(
-              hintText: '11–13 digits',
+              hintText: 'Meter number (11–13 digits)',
+              prefixIcon: const Icon(Icons.speed_rounded),
               errorText: _error,
             ),
             onChanged: (_) => _reset(),
@@ -167,30 +233,44 @@ class _ElectricityScreenState extends ConsumerState<ElectricityScreen> {
           if (customer != null) ...[
             const SizedBox(height: 12),
             CustomerBanner(name: customer.name, address: customer.address),
-            const FieldLabel('Amount'),
+            const SectionTitle('How much?'),
+            OptionGrid(
+              columns: 3,
+              aspectRatio: 1.7,
+              children: [
+                for (final preset in _presets)
+                  OptionCard(
+                    title: preset.format(showKobo: false),
+                    centered: true,
+                    subtitle: _type == MeterType.prepaid
+                        ? '≈ ${(preset.kobo / Disco.tariffPerKwh.kobo).toStringAsFixed(0)} kWh'
+                        : null,
+                    selected: _amount == preset,
+                    onTap: () => setState(
+                      () => _amountField.text = '${preset.kobo ~/ 100}',
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 12),
             TextField(
               controller: _amountField,
-              autofocus: true,
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
                 LengthLimitingTextInputFormatter(7),
               ],
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 prefixText: '₦ ',
-                hintText: 'Minimum ₦1,000',
-                helperText: _type == MeterType.prepaid && !_amount.isZero
-                    ? '≈ ${(_amount.kobo / Disco.tariffPerKwh.kobo).toStringAsFixed(1)} kWh '
-                          'at ${Disco.tariffPerKwh.format()}/kWh'
-                    : null,
+                hintText: 'Another amount (minimum ₦1,000)',
               ),
               onChanged: (_) => setState(() {}),
             ),
-          ],
-          if (customer == null && !_verifying) ...[
+          ] else if (!_verifying) ...[
             const SizedBox(height: 16),
             Text(
-              "We'll check the meter with ${_disco.code} before you pay.",
+              "We'll check the meter with ${_disco.code} before you pay, so "
+              'you can confirm the name and address.',
               style: TextStyle(color: context.tally.muted),
             ),
           ],

@@ -14,6 +14,7 @@ import '../features/auth/presentation/onboarding/otp_screen.dart';
 import '../features/auth/presentation/onboarding/phone_screen.dart';
 import '../features/auth/presentation/onboarding/secret_steps.dart';
 import '../features/auth/presentation/welcome_screen.dart';
+import '../features/bills/data/recent_billers.dart';
 import '../features/bills/presentation/airtime_screen.dart';
 import '../features/bills/presentation/bills_screen.dart';
 import '../features/bills/presentation/cable_screen.dart';
@@ -235,15 +236,19 @@ final routerProvider = Provider<GoRouter>((ref) {
         routes: [
           GoRoute(
             path: 'airtime',
-            builder: (_, state) => AirtimeScreen(
-              initialKind: state.extra as TopUpKind? ?? TopUpKind.airtime,
-            ),
+            builder: (_, state) =>
+                AirtimeScreen(prefill: state.extra as BillPrefill?),
           ),
           GoRoute(
             path: 'electricity',
-            builder: (_, _) => const ElectricityScreen(),
+            builder: (_, state) =>
+                ElectricityScreen(prefill: state.extra as BillPrefill?),
           ),
-          GoRoute(path: 'cable', builder: (_, _) => const CableScreen()),
+          GoRoute(
+            path: 'cable',
+            builder: (_, state) =>
+                CableScreen(prefill: state.extra as BillPrefill?),
+          ),
         ],
       ),
     ],
