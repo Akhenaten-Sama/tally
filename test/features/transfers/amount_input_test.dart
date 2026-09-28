@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kora/core/money/money.dart';
-import 'package:kora/features/transfers/domain/amount_input.dart';
+import 'package:tally/core/money/money.dart';
+import 'package:tally/features/transfers/domain/amount_input.dart';
 
 AmountInput type(String keys) =>
     keys.split('').fold(const AmountInput(), (input, k) => input.press(k));

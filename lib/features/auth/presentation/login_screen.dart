@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../data/auth_controller.dart';
 import '../domain/phone_number.dart';
 import 'widgets/code_entry.dart';
@@ -60,7 +60,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ? 'Log in with the phone number on your account.'
                         : 'For ${phone.display}',
                     style: context.textTheme.bodyLarge?.copyWith(
-                      color: context.kora.muted,
+                      color: context.tally.muted,
                     ),
                   ),
                   const SizedBox(height: 24),

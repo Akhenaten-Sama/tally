@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kora/core/money/money.dart';
-import 'package:kora/features/mortgage/domain/amortization.dart';
+import 'package:tally/core/money/money.dart';
+import 'package:tally/features/mortgage/domain/amortization.dart';
 
 void main() {
   const principal = Money(1500000000); // ₦15,000,000

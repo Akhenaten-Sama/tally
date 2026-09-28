@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/routes.dart';
 import '../../../core/errors/app_exception.dart';
 import '../../../core/money/money.dart';
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../../account/data/account_repository.dart';
 import '../data/mortgage_repository.dart';
 import '../domain/amortization.dart';
@@ -81,7 +81,7 @@ class _ApplyScreenState extends ConsumerState<ApplyScreen> {
   @override
   Widget build(BuildContext context) {
     final quote = widget.quote;
-    final kora = context.kora;
+    final tally = context.tally;
     final name = ref.watch(primaryAccountProvider).value?.holderName;
     final showAffordability = !_incomeValue.isZero && !_affordable;
 
@@ -101,9 +101,9 @@ class _ApplyScreenState extends ConsumerState<ApplyScreen> {
                   Container(
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
-                      color: kora.surface,
+                      color: tally.surface,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: kora.border),
+                      border: Border.all(color: tally.border),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,13 +117,13 @@ class _ApplyScreenState extends ConsumerState<ApplyScreen> {
                           '${quote.amount.format(showKobo: false)} over '
                           '${quote.months ~/ 12} years · '
                           '${_monthly.format()} a month',
-                          style: TextStyle(color: kora.muted),
+                          style: TextStyle(color: tally.muted),
                         ),
                         if (name != null) ...[
                           const SizedBox(height: 4),
                           Text(
                             'Applicant: $name',
-                            style: TextStyle(color: kora.muted),
+                            style: TextStyle(color: tally.muted),
                           ),
                         ],
                       ],

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../money/money.dart';
 import '../theme/app_theme.dart';
-import '../theme/kora_colors.dart';
+import '../theme/tally_colors.dart';
 
 /// A "check before you pay" sheet: title, big amount, detail rows and a
 /// pay button. Returns true when the user confirms.
@@ -44,7 +44,7 @@ Future<bool?> showConfirmSheet(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(label, style: TextStyle(color: context.kora.muted)),
+                Text(label, style: TextStyle(color: context.tally.muted)),
                 const SizedBox(width: 16),
                 Expanded(
                   child: Text(

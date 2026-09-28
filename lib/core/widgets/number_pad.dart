@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../theme/kora_colors.dart';
+import '../theme/tally_colors.dart';
 
 /// On-screen keypad for amounts and PINs. Built in-app rather than using the
 /// system keyboard so the layout is identical on iOS and Android and no

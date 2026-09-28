@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/errors/app_exception.dart';
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../../account/domain/account.dart';
 import '../../bills/presentation/widgets/bill_widgets.dart';
 import '../data/profile_repository.dart';
@@ -79,7 +79,7 @@ class _UpgradeTierScreenState extends ConsumerState<UpgradeTierScreen> {
             'Raise your daily limit to '
             '${KycTier.tier3.dailyLimit.format(showKobo: false)} by adding '
             'your National Identification Number and home address.',
-            style: TextStyle(color: context.kora.muted),
+            style: TextStyle(color: context.tally.muted),
           ),
           const FieldLabel('NIN'),
           TextField(

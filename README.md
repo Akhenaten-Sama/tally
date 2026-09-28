@@ -1,8 +1,8 @@
-# Kora
+# Tally
 
 A Nigerian neobank app built in Flutter: send money to any bank, pay bills and grow your savings.
 
-Kora is a portfolio project. It has no real backend. It runs against a local mock of a bank backend that behaves like the real thing, including network latency, failed transfers, pending transfers that settle later, and reversals. The APK works on its own, and every loading, error and edge state in the UI can be triggered on purpose.
+Tally is a portfolio project. It has no real backend. It runs against a local mock of a bank backend that behaves like the real thing, including network latency, failed transfers, pending transfers that settle later, and reversals. The APK works on its own, and every loading, error and edge state in the UI can be triggered on purpose.
 
 ## Highlights
 
@@ -14,7 +14,7 @@ Kora is a portfolio project. It has no real backend. It runs against a local moc
 - **Lock screen over the navigator.** Auto-lock and unlock never lose your place, even mid-transfer. Balances are hidden in the app switcher.
 - **PIN with lockout.** Three wrong attempts lock transfers for a minute. The check is treated as server-side.
 - **CBN KYC tiers.** Daily limits are enforced across all of the day's transfers.
-- **NIP details.** Name enquiry before confirming, standard NIP fees, and free Kora-to-Kora transfers.
+- **NIP details.** Name enquiry before confirming, standard NIP fees, and free Tally-to-Tally transfers.
 - **Developer tools in the app.** Long-press the avatar on Home, or go to Profile → Developer tools, to go offline, change latency, force transfers to succeed, fail or stay pending, and reset the demo data.
 
 ## White-label brands

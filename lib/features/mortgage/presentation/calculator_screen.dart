@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/routes.dart';
 import '../../../core/money/money.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../domain/amortization.dart';
 import '../domain/mortgage.dart';
 
@@ -32,7 +32,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   @override
   Widget build(BuildContext context) {
     final product = widget.product;
-    final kora = context.kora;
+    final tally = context.tally;
     final months = _years * 12;
     final monthly = monthlyRepayment(
       principal: _amount,
@@ -54,7 +54,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: kora.card,
+                color: tally.card,
                 borderRadius: BorderRadius.circular(24),
               ),
               child: Column(
@@ -63,7 +63,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                   Text(
                     'Monthly repayment',
                     style: TextStyle(
-                      color: kora.onCard.withValues(alpha: 0.75),
+                      color: tally.onCard.withValues(alpha: 0.75),
                     ),
                   ),
                   Semantics(
@@ -71,7 +71,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     child: Text(
                       monthly.format(),
                       style: context.textTheme.headlineMedium?.copyWith(
-                        color: kora.onCard,
+                        color: tally.onCard,
                         fontWeight: FontWeight.w800,
                         fontFeatures: amountFeatures,
                       ),
@@ -111,12 +111,12 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: kora.secondary.withValues(alpha: 0.1),
+                color: tally.secondary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(14),
               ),
               child: Row(
                 children: [
-                  Icon(Icons.info_outline_rounded, color: kora.secondary),
+                  Icon(Icons.info_outline_rounded, color: tally.secondary),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
@@ -152,7 +152,7 @@ class _SliderHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Row(
     children: [
-      Text(label, style: TextStyle(color: context.kora.muted)),
+      Text(label, style: TextStyle(color: context.tally.muted)),
       const Spacer(),
       Text(
         value,
@@ -173,7 +173,7 @@ class _CardRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onCard = context.kora.onCard;
+    final onCard = context.tally.onCard;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3),
       child: Row(

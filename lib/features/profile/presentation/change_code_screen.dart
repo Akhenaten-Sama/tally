@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/errors/app_exception.dart';
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../../auth/data/auth_controller.dart';
 import '../../auth/presentation/onboarding/create_code_screen.dart';
 import '../../auth/presentation/widgets/code_entry.dart';
@@ -110,7 +110,7 @@ class _ChangeCodeScreenState extends ConsumerState<ChangeCodeScreen> {
               ),
               if (subtitle.isNotEmpty) ...[
                 const SizedBox(height: 8),
-                Text(subtitle, style: TextStyle(color: context.kora.muted)),
+                Text(subtitle, style: TextStyle(color: context.tally.muted)),
               ],
               const Spacer(),
               CodeEntry(length: widget.kind.length, onCompleted: _onCompleted),

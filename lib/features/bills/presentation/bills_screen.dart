@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import 'airtime_screen.dart';
 
 class BillsScreen extends StatelessWidget {
@@ -74,9 +74,9 @@ class _BillTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     return Material(
-      color: kora.surface,
+      color: tally.surface,
       borderRadius: BorderRadius.circular(20),
       child: InkWell(
         onTap: onTap,
@@ -85,14 +85,14 @@ class _BillTile extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: kora.border),
+            border: Border.all(color: tally.border),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CircleAvatar(
-                backgroundColor: kora.accent.withValues(alpha: 0.35),
-                child: Icon(icon, color: kora.debit),
+                backgroundColor: tally.accent.withValues(alpha: 0.35),
+                child: Icon(icon, color: tally.debit),
               ),
               const Spacer(),
               Text(
@@ -103,7 +103,9 @@ class _BillTile extends StatelessWidget {
               ),
               Text(
                 subtitle,
-                style: context.textTheme.bodySmall?.copyWith(color: kora.muted),
+                style: context.textTheme.bodySmall?.copyWith(
+                  color: tally.muted,
+                ),
               ),
             ],
           ),

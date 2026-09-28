@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/kora_colors.dart';
+import '../../../../core/theme/tally_colors.dart';
 import '../../../../core/widgets/initials_avatar.dart';
 
 class RecipientHeader extends StatelessWidget {
@@ -19,9 +19,9 @@ class RecipientHeader extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     padding: const EdgeInsets.all(12),
     decoration: BoxDecoration(
-      color: context.kora.surface,
+      color: context.tally.surface,
       borderRadius: BorderRadius.circular(16),
-      border: Border.all(color: context.kora.border),
+      border: Border.all(color: context.tally.border),
     ),
     child: Row(
       children: [
@@ -42,7 +42,7 @@ class RecipientHeader extends StatelessWidget {
               Text(
                 '$bankName · $accountNumber',
                 style: context.textTheme.bodySmall?.copyWith(
-                  color: context.kora.muted,
+                  color: context.tally.muted,
                 ),
               ),
             ],

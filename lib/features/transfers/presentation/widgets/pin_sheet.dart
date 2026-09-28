@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/errors/app_exception.dart';
 import '../../../../core/security/biometrics.dart';
-import '../../../../core/theme/kora_colors.dart';
+import '../../../../core/theme/tally_colors.dart';
 import '../../../auth/data/auth_controller.dart';
 import '../../../auth/presentation/widgets/biometric_key.dart';
 import '../../../auth/presentation/widgets/code_entry.dart';

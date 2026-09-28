@@ -1,14 +1,14 @@
 import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kora/core/data/database.dart';
-import 'package:kora/core/data/demo_seeder.dart';
-import 'package:kora/core/errors/app_exception.dart';
-import 'package:kora/core/network/mock_network.dart';
-import 'package:kora/features/auth/data/auth_controller.dart';
-import 'package:kora/features/auth/data/transaction_pin_repository.dart';
-import 'package:kora/features/transfers/domain/bank.dart';
-import 'package:kora/features/transfers/presentation/send_money_controller.dart';
+import 'package:tally/core/data/database.dart';
+import 'package:tally/core/data/demo_seeder.dart';
+import 'package:tally/core/errors/app_exception.dart';
+import 'package:tally/core/network/mock_network.dart';
+import 'package:tally/features/auth/data/auth_controller.dart';
+import 'package:tally/features/auth/data/transaction_pin_repository.dart';
+import 'package:tally/features/transfers/domain/bank.dart';
+import 'package:tally/features/transfers/presentation/send_money_controller.dart';
 
 /// Checks the PIN without touching the network, so going "offline" in a
 /// test only affects the transfer itself.

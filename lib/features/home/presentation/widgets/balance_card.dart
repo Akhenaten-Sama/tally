@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_theme.dart';
-import '../../../../core/theme/kora_colors.dart';
+import '../../../../core/theme/tally_colors.dart';
 import '../../../../core/widgets/liquid_glass_card.dart';
 import '../../../../core/widgets/skeleton.dart';
 import '../../../account/domain/account.dart';
@@ -28,8 +28,8 @@ class BalanceCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final visible = ref.watch(balanceVisibleProvider);
-    final kora = context.kora;
-    final onCardMuted = kora.onCard.withValues(alpha: 0.7);
+    final tally = context.tally;
+    final onCardMuted = tally.onCard.withValues(alpha: 0.7);
 
     return _CardShell(
       child: Column(
@@ -66,7 +66,7 @@ class BalanceCard extends ConsumerWidget {
               key: ValueKey(visible),
               semanticsLabel: visible ? null : 'Balance hidden',
               style: context.textTheme.headlineLarge?.copyWith(
-                color: kora.onCard,
+                color: tally.onCard,
                 fontWeight: FontWeight.w800,
                 fontFeatures: amountFeatures,
               ),

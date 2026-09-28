@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/kora_colors.dart';
+import '../theme/tally_colors.dart';
 
 /// Placeholder for screens scheduled in a later milestone.
 class ComingSoonScreen extends StatelessWidget {
@@ -23,12 +23,12 @@ class ComingSoonScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 48, color: context.kora.muted),
+            Icon(icon, size: 48, color: context.tally.muted),
             const SizedBox(height: 12),
             Text(
               'Arriving in milestone $milestone',
               style: context.textTheme.bodyLarge?.copyWith(
-                color: context.kora.muted,
+                color: context.tally.muted,
               ),
             ),
           ],

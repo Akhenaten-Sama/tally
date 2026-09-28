@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../../core/errors/app_exception.dart';
-import '../../../../core/theme/kora_colors.dart';
+import '../../../../core/theme/tally_colors.dart';
 import '../../../../core/widgets/number_pad.dart';
 
 /// Digit indicators, a status line and a keypad. Calls [onCompleted] when
@@ -80,7 +80,7 @@ class _CodeEntryState extends State<CodeEntry>
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -124,7 +124,7 @@ class _CodeEntryState extends State<CodeEntry>
                   _error ?? widget.hint ?? '',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: _error != null ? AppColors.error : kora.muted,
+                    color: _error != null ? AppColors.error : tally.muted,
                   ),
                 ),
         ),
@@ -149,7 +149,7 @@ class _Dot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = context.kora.debit;
+    final color = context.tally.debit;
     return AnimatedContainer(
       duration: const Duration(milliseconds: 120),
       margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -172,17 +172,17 @@ class _DigitBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 5),
       width: 44,
       height: 54,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: kora.surface,
+        color: tally.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: active ? kora.debit : kora.border,
+          color: active ? tally.debit : tally.border,
           width: active ? 2 : 1,
         ),
       ),

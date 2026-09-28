@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../../../core/utils/share_image.dart';
 import '../../../core/widgets/error_view.dart';
 import '../data/transaction_repository.dart';
@@ -28,7 +28,7 @@ class _TransactionDetailScreenState
     try {
       await shareWidgetAsImage(
         _receiptKey,
-        fileName: 'kora-receipt-$reference',
+        fileName: 'tally-receipt-$reference',
         sharePositionOrigin: box == null
             ? null
             : box.localToGlobal(Offset.zero) & box.size,
@@ -51,7 +51,7 @@ class _TransactionDetailScreenState
             key: _receiptKey,
             // Opaque backdrop so the shared PNG has no transparent corners.
             child: ColoredBox(
-              color: context.kora.background,
+              color: context.tally.background,
               child: Padding(
                 padding: const EdgeInsets.all(4),
                 child: ReceiptView(transaction: value),

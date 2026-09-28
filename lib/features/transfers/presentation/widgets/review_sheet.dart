@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_theme.dart';
-import '../../../../core/theme/kora_colors.dart';
+import '../../../../core/theme/tally_colors.dart';
 import '../send_money_controller.dart';
 
 /// Returns true when the user confirms.
@@ -88,7 +88,7 @@ class _Row extends StatelessWidget {
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: TextStyle(color: context.kora.muted)),
+        Text(label, style: TextStyle(color: context.tally.muted)),
         const SizedBox(width: 16),
         Expanded(
           child: Text(

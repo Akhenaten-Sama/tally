@@ -8,7 +8,7 @@ import '../../../core/brand/brand.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/debug/debug_menu.dart';
 import '../../../core/security/biometrics.dart';
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../../../core/widgets/initials_avatar.dart';
 import '../../account/data/account_repository.dart';
 import '../../account/domain/account.dart';
@@ -142,7 +142,7 @@ class ProfileScreen extends ConsumerWidget {
             child: Text(
               '${Brand.current.name} · version 1.0.0',
               style: context.textTheme.bodySmall?.copyWith(
-                color: context.kora.muted,
+                color: context.tally.muted,
               ),
             ),
           ),
@@ -159,7 +159,7 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
       child: Row(
@@ -181,7 +181,7 @@ class _Header extends StatelessWidget {
                   children: [
                     Text(
                       '${Brand.current.shortName} · ${account.accountNumber}',
-                      style: TextStyle(color: kora.muted),
+                      style: TextStyle(color: tally.muted),
                     ),
                     IconButton(
                       visualDensity: VisualDensity.compact,
@@ -189,7 +189,7 @@ class _Header extends StatelessWidget {
                       icon: Icon(
                         Icons.copy_rounded,
                         size: 16,
-                        color: kora.muted,
+                        color: tally.muted,
                       ),
                       onPressed: () async {
                         await Clipboard.setData(
@@ -211,13 +211,13 @@ class _Header extends StatelessWidget {
                     vertical: 3,
                   ),
                   decoration: BoxDecoration(
-                    color: kora.accent,
+                    color: tally.accent,
                     borderRadius: BorderRadius.circular(99),
                   ),
                   child: Text(
                     account.tier.label,
                     style: context.textTheme.labelSmall?.copyWith(
-                      color: kora.onAccent,
+                      color: tally.onAccent,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
@@ -242,7 +242,7 @@ class _Section extends StatelessWidget {
     child: Text(
       title.toUpperCase(),
       style: context.textTheme.labelMedium?.copyWith(
-        color: context.kora.muted,
+        color: context.tally.muted,
         letterSpacing: 1,
         fontWeight: FontWeight.w700,
       ),

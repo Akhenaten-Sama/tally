@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/kora_colors.dart';
+import '../theme/tally_colors.dart';
 import '../utils/formatters.dart';
 
 class InitialsAvatar extends StatelessWidget {
@@ -12,11 +12,11 @@ class InitialsAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) => CircleAvatar(
     radius: radius,
-    backgroundColor: context.kora.accent.withValues(alpha: 0.35),
+    backgroundColor: context.tally.accent.withValues(alpha: 0.35),
     child: Text(
       initials(name),
       style: context.textTheme.labelLarge?.copyWith(
-        color: context.kora.debit,
+        color: context.tally.debit,
         fontWeight: FontWeight.w800,
       ),
     ),

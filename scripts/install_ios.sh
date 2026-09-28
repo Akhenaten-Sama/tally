@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 # Builds a release of one brand and installs it on a connected iPhone.
 #
-#   scripts/install_ios.sh            # Kora (portfolio)
+#   scripts/install_ios.sh            # Tally (portfolio)
 #   scripts/install_ios.sh cmb        # Cooperative Mortgage Bank pitch build
 #
 # Each brand gets its own app name, icon and bundle ID, so they install side
 # by side. Xcode project files are restored afterwards, even on failure.
 set -euo pipefail
 
-BRAND=${1:-kora}
+BRAND=${1:-tally}
 cd "$(dirname "$0")/.."
 
 # LAUNCH_RGB: launch screen background, 0–1 per channel.
 case "$BRAND" in
-  kora) NAME=Kora;   BUNDLE=dev.olalekan.kora;     ICON=AppIcon;     LAUNCH_RGB="0.055 0.231 0.180" ;;
-  cmb)  NAME=CMBank; BUNDLE=dev.olalekan.kora.cmb; ICON=AppIcon-cmb; LAUNCH_RGB="0 0.478 0.271" ;;
-  *) echo "Unknown brand: $BRAND (expected kora or cmb)" >&2; exit 1 ;;
+  tally) NAME=Tally;  BUNDLE=dev.olalekan.tally;     ICON=AppIcon;     LAUNCH_RGB="0.055 0.231 0.180" ;;
+  cmb)  NAME=CMBank; BUNDLE=dev.olalekan.tally.cmb; ICON=AppIcon-cmb; LAUNCH_RGB="0 0.478 0.271" ;;
+  *) echo "Unknown brand: $BRAND (expected tally or cmb)" >&2; exit 1 ;;
 esac
 
 PLIST=ios/Runner/Info.plist
@@ -42,7 +42,7 @@ sed -i '' -E \
 
 /usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName $NAME" "$PLIST"
 sed -i '' \
-  -e "s/PRODUCT_BUNDLE_IDENTIFIER = dev.olalekan.kora;/PRODUCT_BUNDLE_IDENTIFIER = $BUNDLE;/" \
+  -e "s/PRODUCT_BUNDLE_IDENTIFIER = dev.olalekan.tally;/PRODUCT_BUNDLE_IDENTIFIER = $BUNDLE;/" \
   -e "s/ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;/ASSETCATALOG_COMPILER_APPICON_NAME = $ICON;/" \
   "$PBXPROJ"
 

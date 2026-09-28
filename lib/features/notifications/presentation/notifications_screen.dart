@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../../../core/utils/formatters.dart';
 import '../data/notifications_provider.dart';
 import '../domain/app_notification.dart';
@@ -42,7 +42,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
           ? Center(
               child: Text(
                 "You're all caught up.",
-                style: TextStyle(color: context.kora.muted),
+                style: TextStyle(color: context.tally.muted),
               ),
             )
           : ListView(
@@ -55,7 +55,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                     child: Text(
                       day,
                       style: context.textTheme.labelLarge?.copyWith(
-                        color: context.kora.muted,
+                        color: context.tally.muted,
                       ),
                     ),
                   ),
@@ -79,7 +79,7 @@ class _NotificationTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     final n = notification;
     return InkWell(
       onTap: n.route == null ? null : () => context.push(n.route!),
@@ -90,8 +90,8 @@ class _NotificationTile extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 20,
-              backgroundColor: kora.accent.withValues(alpha: 0.3),
-              child: Icon(n.icon, size: 20, color: kora.debit),
+              backgroundColor: tally.accent.withValues(alpha: 0.3),
+              child: Icon(n.icon, size: 20, color: tally.debit),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -113,13 +113,13 @@ class _NotificationTile extends StatelessWidget {
                       Text(
                         formatTime(n.time),
                         style: context.textTheme.bodySmall?.copyWith(
-                          color: kora.muted,
+                          color: tally.muted,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 2),
-                  Text(n.body, style: TextStyle(color: kora.muted)),
+                  Text(n.body, style: TextStyle(color: tally.muted)),
                 ],
               ),
             ),
@@ -132,7 +132,7 @@ class _NotificationTile extends StatelessWidget {
                         label: 'Unread',
                         child: CircleAvatar(
                           radius: 4,
-                          backgroundColor: kora.bright,
+                          backgroundColor: tally.bright,
                         ),
                       ),
                     )

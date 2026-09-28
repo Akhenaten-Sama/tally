@@ -1,14 +1,14 @@
 import 'package:drift/drift.dart' hide isNull;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kora/core/data/database.dart';
-import 'package:kora/core/errors/app_exception.dart';
-import 'package:kora/core/money/money.dart';
-import 'package:kora/core/network/mock_network.dart';
-import 'package:kora/features/transactions/domain/bank_transaction.dart';
-import 'package:kora/features/transfers/data/mock_transfer_repository.dart';
-import 'package:kora/features/transfers/domain/bank.dart';
-import 'package:kora/features/transfers/domain/transfer.dart';
+import 'package:tally/core/data/database.dart';
+import 'package:tally/core/errors/app_exception.dart';
+import 'package:tally/core/money/money.dart';
+import 'package:tally/core/network/mock_network.dart';
+import 'package:tally/features/transactions/domain/bank_transaction.dart';
+import 'package:tally/features/transfers/data/mock_transfer_repository.dart';
+import 'package:tally/features/transfers/domain/bank.dart';
+import 'package:tally/features/transfers/domain/transfer.dart';
 
 void main() {
   late AppDatabase db;
@@ -64,7 +64,7 @@ void main() {
     expect(await balance(), startingBalance - const Money(1002688));
   });
 
-  test('transfers to Kora accounts are free', () async {
+  test('transfers to Tally accounts are free', () async {
     await repository.send(request(bank: Bank.internal));
 
     expect(await balance(), startingBalance - const Money(1000000));

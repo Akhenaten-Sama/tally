@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../errors/app_exception.dart';
-import '../theme/kora_colors.dart';
+import '../theme/tally_colors.dart';
 
 class ErrorView extends StatelessWidget {
   const ErrorView({super.key, required this.error, this.onRetry});
@@ -19,13 +19,13 @@ class ErrorView extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.cloud_off_rounded, size: 40, color: context.kora.muted),
+          Icon(Icons.cloud_off_rounded, size: 40, color: context.tally.muted),
           const SizedBox(height: 12),
           Text(
             message,
             textAlign: TextAlign.center,
             style: context.textTheme.bodyMedium?.copyWith(
-              color: context.kora.muted,
+              color: context.tally.muted,
             ),
           ),
           if (onRetry != null) ...[

@@ -36,7 +36,7 @@ Future<void> main() async {
   unawaited(container.read(transferRepositoryProvider).reconcilePending());
 
   runApp(
-    UncontrolledProviderScope(container: container, child: const KoraApp()),
+    UncontrolledProviderScope(container: container, child: const TallyApp()),
   );
 }
 

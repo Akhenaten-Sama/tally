@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kora/core/money/money.dart';
-import 'package:kora/features/statement/domain/statement.dart';
-import 'package:kora/features/transactions/domain/bank_transaction.dart';
+import 'package:tally/core/money/money.dart';
+import 'package:tally/features/statement/domain/statement.dart';
+import 'package:tally/features/transactions/domain/bank_transaction.dart';
 
 BankTransaction txn(
   String id,

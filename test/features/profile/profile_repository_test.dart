@@ -1,12 +1,12 @@
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kora/core/data/database.dart';
-import 'package:kora/core/data/demo_seeder.dart';
-import 'package:kora/core/errors/app_exception.dart';
-import 'package:kora/core/network/mock_network.dart';
-import 'package:kora/features/account/domain/account.dart';
-import 'package:kora/features/profile/data/profile_repository.dart';
-import 'package:kora/features/profile/domain/customer_profile.dart';
+import 'package:tally/core/data/database.dart';
+import 'package:tally/core/data/demo_seeder.dart';
+import 'package:tally/core/errors/app_exception.dart';
+import 'package:tally/core/network/mock_network.dart';
+import 'package:tally/features/account/domain/account.dart';
+import 'package:tally/features/profile/data/profile_repository.dart';
+import 'package:tally/features/profile/domain/customer_profile.dart';
 
 void main() {
   late AppDatabase db;
@@ -45,10 +45,11 @@ void main() {
   });
 
   test('rejects a malformed NIN without changing the tier', () async {
+    final before = await tier();
     await expectLater(
       profiles.upgradeToTier3(nin: '1234', address: '5 Allen Avenue, Ikeja'),
       throwsA(isA<ValidationException>()),
     );
-    expect(await tier(), KycTier.tier2.level);
+    expect(await tier(), before);
   });
 }

@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../../app/routes.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../../../core/utils/formatters.dart';
 import '../../../core/widgets/error_view.dart';
 import '../../../core/widgets/liquid_glass_card.dart';
@@ -94,8 +94,8 @@ class _SummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
-    final onCardMuted = kora.onCard.withValues(alpha: 0.75);
+    final tally = context.tally;
+    final onCardMuted = tally.onCard.withValues(alpha: 0.75);
     final percent = (mortgage.progress * 100).toStringAsFixed(1);
 
     return LiquidGlassCard(
@@ -104,13 +104,13 @@ class _SummaryCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.house_rounded, color: kora.accent),
+              Icon(Icons.house_rounded, color: tally.accent),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   mortgage.propertyName,
                   style: context.textTheme.titleMedium?.copyWith(
-                    color: kora.onCard,
+                    color: tally.onCard,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -130,7 +130,7 @@ class _SummaryCard extends StatelessWidget {
           Text(
             mortgage.outstanding.format(),
             style: context.textTheme.headlineMedium?.copyWith(
-              color: kora.onCard,
+              color: tally.onCard,
               fontWeight: FontWeight.w800,
               fontFeatures: amountFeatures,
             ),
@@ -143,8 +143,8 @@ class _SummaryCard extends StatelessWidget {
               child: LinearProgressIndicator(
                 value: mortgage.progress,
                 minHeight: 8,
-                color: kora.accent,
-                backgroundColor: kora.onCard.withValues(alpha: 0.2),
+                color: tally.accent,
+                backgroundColor: tally.onCard.withValues(alpha: 0.2),
               ),
             ),
           ),
@@ -167,7 +167,7 @@ class _NextRepayment extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final kora = context.kora;
+    final tally = context.tally;
     final next = mortgage.nextInstallment!;
     final days = DateUtils.dateOnly(next.dueDate)
         .difference(DateUtils.dateOnly(DateTime.now()))
@@ -182,14 +182,14 @@ class _NextRepayment extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: kora.surface,
+        color: tally.surface,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: kora.border),
+        border: Border.all(color: tally.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Next repayment', style: TextStyle(color: kora.muted)),
+          Text('Next repayment', style: TextStyle(color: tally.muted)),
           const SizedBox(height: 4),
           Text(
             next.payment.format(),
@@ -201,7 +201,7 @@ class _NextRepayment extends ConsumerWidget {
           Text(
             dueText,
             style: TextStyle(
-              color: days < 0 ? AppColors.error : kora.secondary,
+              color: days < 0 ? AppColors.error : tally.secondary,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -243,7 +243,7 @@ class _Details extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 7),
             child: Row(
               children: [
-                Text(label, style: TextStyle(color: context.kora.muted)),
+                Text(label, style: TextStyle(color: context.tally.muted)),
                 const SizedBox(width: 16),
                 Expanded(
                   child: Text(
@@ -290,9 +290,9 @@ class _ProductsCta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     return Material(
-      color: kora.secondary.withValues(alpha: 0.1),
+      color: tally.secondary.withValues(alpha: 0.1),
       borderRadius: BorderRadius.circular(20),
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
@@ -301,7 +301,7 @@ class _ProductsCta extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              Icon(Icons.calculate_rounded, color: kora.secondary, size: 32),
+              Icon(Icons.calculate_rounded, color: tally.secondary, size: 32),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -315,12 +315,12 @@ class _ProductsCta extends StatelessWidget {
                     ),
                     Text(
                       'Calculate repayments and apply in minutes',
-                      style: TextStyle(color: kora.muted),
+                      style: TextStyle(color: tally.muted),
                     ),
                   ],
                 ),
               ),
-              Icon(Icons.chevron_right_rounded, color: kora.muted),
+              Icon(Icons.chevron_right_rounded, color: tally.muted),
             ],
           ),
         ),
@@ -337,7 +337,7 @@ class _NoMortgage extends StatelessWidget {
     padding: const EdgeInsets.symmetric(vertical: 32),
     child: Column(
       children: [
-        Icon(Icons.house_outlined, size: 56, color: context.kora.muted),
+        Icon(Icons.house_outlined, size: 56, color: context.tally.muted),
         const SizedBox(height: 12),
         Text(
           "You don't have a mortgage with us yet",
@@ -346,7 +346,7 @@ class _NoMortgage extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           'See what you could borrow below.',
-          style: TextStyle(color: context.kora.muted),
+          style: TextStyle(color: context.tally.muted),
         ),
       ],
     ),

@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
 import '../../../core/errors/app_exception.dart';
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../../../core/widgets/initials_avatar.dart';
 import '../data/transfer_repository.dart';
 import '../domain/transfer.dart';
@@ -121,7 +121,7 @@ class _RecipientScreenState extends ConsumerState<RecipientScreen> {
                     Text(
                       'Recent',
                       style: context.textTheme.titleSmall?.copyWith(
-                        color: context.kora.muted,
+                        color: context.tally.muted,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -198,7 +198,7 @@ class _LookupStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     if (isLoading) {
       return Row(
         children: [
@@ -207,7 +207,7 @@ class _LookupStatus extends StatelessWidget {
             child: CircularProgressIndicator(strokeWidth: 2),
           ),
           const SizedBox(width: 8),
-          Text('Verifying account…', style: TextStyle(color: kora.muted)),
+          Text('Verifying account…', style: TextStyle(color: tally.muted)),
         ],
       );
     }
@@ -215,18 +215,18 @@ class _LookupStatus extends StatelessWidget {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
-          color: kora.credit.withValues(alpha: 0.1),
+          color: tally.credit.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           children: [
-            Icon(Icons.verified_rounded, size: 18, color: kora.credit),
+            Icon(Icons.verified_rounded, size: 18, color: tally.credit),
             const SizedBox(width: 8),
             Expanded(
               child: Text(
                 name!,
                 style: TextStyle(
-                  color: kora.credit,
+                  color: tally.credit,
                   fontWeight: FontWeight.w700,
                 ),
               ),

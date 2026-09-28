@@ -1,4 +1,4 @@
-package dev.olalekan.kora
+package dev.olalekan.tally
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 

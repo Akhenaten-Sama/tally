@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/routes.dart';
-import '../../../../core/theme/kora_colors.dart';
+import '../../../../core/theme/tally_colors.dart';
 import '../../data/mortgage_repository.dart';
 import '../../domain/mortgage.dart';
 
@@ -16,13 +16,13 @@ class ApplicationTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final now = ref.watch(clockProvider).value ?? DateTime.now();
     final stage = application.stageAt(now);
-    final kora = context.kora;
+    final tally = context.tally;
 
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: CircleAvatar(
-        backgroundColor: kora.secondary.withValues(alpha: 0.12),
-        child: Icon(Icons.description_outlined, color: kora.secondary),
+        backgroundColor: tally.secondary.withValues(alpha: 0.12),
+        child: Icon(Icons.description_outlined, color: tally.secondary),
       ),
       title: Text(
         '${application.product.name} · '

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../domain/mortgage.dart';
 import '../../../core/brand/brand.dart';
 
@@ -25,7 +25,7 @@ class ProductsScreen extends StatelessWidget {
               'Rates shown are indicative for this concept demo.',
               textAlign: TextAlign.center,
               style: context.textTheme.bodySmall?.copyWith(
-                color: context.kora.muted,
+                color: context.tally.muted,
               ),
             ),
         ],
@@ -41,13 +41,13 @@ class _ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: kora.surface,
+        color: tally.surface,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: kora.border),
+        border: Border.all(color: tally.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,13 +68,13 @@ class _ProductCard extends StatelessWidget {
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: kora.accent,
+                  color: tally.accent,
                   borderRadius: BorderRadius.circular(99),
                 ),
                 child: Text(
                   product.rateLabel,
                   style: context.textTheme.labelMedium?.copyWith(
-                    color: kora.onAccent,
+                    color: tally.onAccent,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
@@ -114,10 +114,10 @@ class _Fact extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Row(
     children: [
-      Icon(icon, size: 18, color: context.kora.secondary),
+      Icon(icon, size: 18, color: context.tally.secondary),
       const SizedBox(width: 8),
       Expanded(
-        child: Text(text, style: TextStyle(color: context.kora.muted)),
+        child: Text(text, style: TextStyle(color: context.tally.muted)),
       ),
     ],
   );

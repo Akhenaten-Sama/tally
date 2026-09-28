@@ -1,6 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kora/core/security/credential_store.dart';
+import 'package:tally/core/security/credential_store.dart';
 
 void main() {
   late CredentialStore store;

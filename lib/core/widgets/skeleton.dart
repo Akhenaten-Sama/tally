@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/kora_colors.dart';
+import '../theme/tally_colors.dart';
 
 /// A pulsing placeholder shaped like the content that is loading.
 class Skeleton extends StatefulWidget {
@@ -40,7 +40,7 @@ class _SkeletonState extends State<Skeleton>
       width: widget.width,
       height: widget.height,
       decoration: BoxDecoration(
-        color: context.kora.border,
+        color: context.tally.border,
         borderRadius: BorderRadius.circular(widget.radius),
       ),
     );

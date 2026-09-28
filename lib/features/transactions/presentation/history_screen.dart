@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
 
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../../../core/utils/formatters.dart';
 import '../../../core/widgets/error_view.dart';
 import '../data/transaction_repository.dart';
@@ -42,7 +42,7 @@ class HistoryScreen extends ConsumerWidget {
                   child: Text(
                     day,
                     style: context.textTheme.labelLarge?.copyWith(
-                      color: context.kora.muted,
+                      color: context.tally.muted,
                     ),
                   ),
                 ),

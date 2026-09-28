@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/money/money.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../../auth/domain/phone_number.dart';
 import '../data/bills_repository.dart';
 import '../domain/billers.dart';
@@ -182,7 +182,7 @@ class _AirtimeScreenState extends ConsumerState<AirtimeScreen> {
             if (network == null)
               Text(
                 'Enter a number or pick a network to see plans.',
-                style: TextStyle(color: context.kora.muted),
+                style: TextStyle(color: context.tally.muted),
               )
             else
               for (final plan in network.dataPlans)
@@ -211,7 +211,7 @@ class _PlanTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Semantics(
@@ -224,10 +224,10 @@ class _PlanTile extends StatelessWidget {
             duration: const Duration(milliseconds: 150),
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: kora.surface,
+              color: tally.surface,
               borderRadius: BorderRadius.circular(14),
               border: Border.all(
-                color: selected ? kora.debit : kora.border,
+                color: selected ? tally.debit : tally.border,
                 width: selected ? 2 : 1,
               ),
             ),
@@ -242,7 +242,7 @@ class _PlanTile extends StatelessWidget {
                 const SizedBox(width: 12),
                 Text(
                   '${plan.validityDays} days',
-                  style: TextStyle(color: kora.muted),
+                  style: TextStyle(color: tally.muted),
                 ),
                 const Spacer(),
                 Text(

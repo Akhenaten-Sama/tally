@@ -12,8 +12,8 @@ abstract final class AppColors {
 /// Semantic colours Material's ColorScheme has no slot for, derived from
 /// the current [Brand].
 @immutable
-class KoraColors extends ThemeExtension<KoraColors> {
-  const KoraColors({
+class TallyColors extends ThemeExtension<TallyColors> {
+  const TallyColors({
     required this.background,
     required this.surface,
     required this.muted,
@@ -29,7 +29,7 @@ class KoraColors extends ThemeExtension<KoraColors> {
     required this.secondary,
   });
 
-  factory KoraColors.light(Brand brand) => KoraColors(
+  factory TallyColors.light(Brand brand) => TallyColors(
     background: const Color(0xFFF5F6F1),
     surface: Colors.white,
     muted: const Color(0xFF5E6B63),
@@ -45,7 +45,7 @@ class KoraColors extends ThemeExtension<KoraColors> {
     secondary: brand.secondary,
   );
 
-  factory KoraColors.dark(Brand brand) => KoraColors(
+  factory TallyColors.dark(Brand brand) => TallyColors(
     background: const Color(0xFF09110D),
     surface: const Color(0xFF121C17),
     muted: const Color(0xFF93A198),
@@ -78,7 +78,7 @@ class KoraColors extends ThemeExtension<KoraColors> {
   final Color secondary;
 
   @override
-  KoraColors copyWith({
+  TallyColors copyWith({
     Color? background,
     Color? surface,
     Color? muted,
@@ -92,7 +92,7 @@ class KoraColors extends ThemeExtension<KoraColors> {
     Color? onAccent,
     Color? bright,
     Color? secondary,
-  }) => KoraColors(
+  }) => TallyColors(
     background: background ?? this.background,
     surface: surface ?? this.surface,
     muted: muted ?? this.muted,
@@ -109,10 +109,10 @@ class KoraColors extends ThemeExtension<KoraColors> {
   );
 
   @override
-  KoraColors lerp(KoraColors? other, double t) {
+  TallyColors lerp(TallyColors? other, double t) {
     if (other == null) return this;
     Color l(Color a, Color b) => Color.lerp(a, b, t)!;
-    return KoraColors(
+    return TallyColors(
       background: l(background, other.background),
       surface: l(surface, other.surface),
       muted: l(muted, other.muted),
@@ -130,7 +130,7 @@ class KoraColors extends ThemeExtension<KoraColors> {
   }
 }
 
-extension KoraThemeX on BuildContext {
-  KoraColors get kora => Theme.of(this).extension<KoraColors>()!;
+extension TallyThemeX on BuildContext {
+  TallyColors get tally => Theme.of(this).extension<TallyColors>()!;
   TextTheme get textTheme => Theme.of(this).textTheme;
 }

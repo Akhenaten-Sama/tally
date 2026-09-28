@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_theme.dart';
-import '../../../../core/theme/kora_colors.dart';
+import '../../../../core/theme/tally_colors.dart';
 import '../../../../core/utils/formatters.dart';
 import '../../../../core/widgets/skeleton.dart';
 import '../../domain/bank_transaction.dart';
@@ -40,10 +40,10 @@ class TransactionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     final t = transaction;
     final sign = t.isCredit ? '+' : '−';
-    final settledColor = t.isCredit ? kora.credit : kora.debit;
+    final settledColor = t.isCredit ? tally.credit : tally.debit;
 
     return Semantics(
       button: onTap != null,
@@ -60,8 +60,8 @@ class TransactionTile extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 22,
-                backgroundColor: kora.accent.withValues(alpha: 0.25),
-                child: Icon(t.category.icon, color: kora.debit, size: 20),
+                backgroundColor: tally.accent.withValues(alpha: 0.25),
+                child: Icon(t.category.icon, color: tally.debit, size: 20),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -80,7 +80,7 @@ class TransactionTile extends StatelessWidget {
                     Text(
                       '${t.category.label} · ${formatTime(t.createdAt)}',
                       style: context.textTheme.bodySmall?.copyWith(
-                        color: kora.muted,
+                        color: tally.muted,
                       ),
                     ),
                   ],
@@ -96,7 +96,7 @@ class TransactionTile extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                       fontFeatures: amountFeatures,
                       color: t.status == TxnStatus.reversed
-                          ? kora.muted
+                          ? tally.muted
                           : settledColor,
                       decoration: t.status == TxnStatus.reversed
                           ? TextDecoration.lineThrough
@@ -124,12 +124,12 @@ class StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     final (label, color) = switch (status) {
-      TxnStatus.pending => ('Pending', kora.pending),
-      TxnStatus.successful => ('Successful', kora.credit),
+      TxnStatus.pending => ('Pending', tally.pending),
+      TxnStatus.successful => ('Successful', tally.credit),
       TxnStatus.failed => ('Failed', AppColors.error),
-      TxnStatus.reversed => ('Reversed', kora.muted),
+      TxnStatus.reversed => ('Reversed', tally.muted),
     };
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),

@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/errors/app_exception.dart';
 import '../../../core/money/money.dart';
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../data/bills_repository.dart';
 import '../domain/billers.dart';
 import 'pay_bill.dart';
@@ -191,7 +191,7 @@ class _ElectricityScreenState extends ConsumerState<ElectricityScreen> {
             const SizedBox(height: 16),
             Text(
               "We'll check the meter with ${_disco.code} before you pay.",
-              style: TextStyle(color: context.kora.muted),
+              style: TextStyle(color: context.tally.muted),
             ),
           ],
         ],

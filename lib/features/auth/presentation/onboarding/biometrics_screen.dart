@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/security/biometrics.dart';
-import '../../../../core/theme/kora_colors.dart';
+import '../../../../core/theme/tally_colors.dart';
 import 'onboarding_controller.dart';
 import 'onboarding_scaffold.dart';
 import '../../../../core/brand/brand.dart';
@@ -54,7 +54,7 @@ class _BiometricsScreenState extends ConsumerState<BiometricsScreen> {
               width: 120,
               height: 120,
               decoration: BoxDecoration(
-                color: context.kora.accent.withValues(alpha: 0.35),
+                color: context.tally.accent.withValues(alpha: 0.35),
                 shape: BoxShape.circle,
               ),
               child: Icon(widget.kind.icon, size: 64),

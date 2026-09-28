@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kora/core/money/money.dart';
-import 'package:kora/features/account/domain/account.dart';
-import 'package:kora/features/profile/domain/customer_profile.dart';
-import 'package:kora/features/statement/data/statement_pdf.dart';
-import 'package:kora/features/statement/domain/statement.dart';
+import 'package:tally/core/money/money.dart';
+import 'package:tally/features/account/domain/account.dart';
+import 'package:tally/features/profile/domain/customer_profile.dart';
+import 'package:tally/features/statement/data/statement_pdf.dart';
+import 'package:tally/features/statement/domain/statement.dart';
 
 import 'statement_test.dart' show txn;
 
@@ -16,7 +16,12 @@ void main() {
     final statement = Statement.build(
       transactions: [
         for (var i = 1; i <= 40; i++)
-          txn('T$i', DateTime(2026, 9, 1 + i % 28), 150000 * i, credit: i.isEven),
+          txn(
+            'T$i',
+            DateTime(2026, 9, 1 + i % 28),
+            150000 * i,
+            credit: i.isEven,
+          ),
       ],
       currentBalance: const Money(1278900000),
       from: DateTime(2026, 9, 1),

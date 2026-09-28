@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/routes.dart';
 import '../../../../core/brand/brand.dart';
-import '../../../../core/theme/kora_colors.dart';
+import '../../../../core/theme/tally_colors.dart';
 import '../../../../core/utils/formatters.dart';
 import '../../../mortgage/data/mortgage_repository.dart';
 
@@ -17,12 +17,12 @@ class MortgageDueCard extends ConsumerWidget {
     if (!Brand.current.hasMortgages) return const SizedBox.shrink();
     final next = ref.watch(mortgageProvider).value?.nextInstallment;
     if (next == null) return const SizedBox.shrink();
-    final kora = context.kora;
+    final tally = context.tally;
 
     return Padding(
       padding: const EdgeInsets.only(top: 12),
       child: Material(
-        color: kora.surface,
+        color: tally.surface,
         borderRadius: BorderRadius.circular(18),
         child: InkWell(
           borderRadius: BorderRadius.circular(18),
@@ -31,13 +31,13 @@ class MortgageDueCard extends ConsumerWidget {
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(18),
-              border: Border.all(color: kora.border),
+              border: Border.all(color: tally.border),
             ),
             child: Row(
               children: [
                 CircleAvatar(
-                  backgroundColor: kora.accent.withValues(alpha: 0.35),
-                  child: Icon(Icons.house_rounded, color: kora.debit),
+                  backgroundColor: tally.accent.withValues(alpha: 0.35),
+                  child: Icon(Icons.house_rounded, color: tally.debit),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -46,7 +46,7 @@ class MortgageDueCard extends ConsumerWidget {
                     children: [
                       Text(
                         'Next mortgage repayment',
-                        style: TextStyle(color: kora.muted),
+                        style: TextStyle(color: tally.muted),
                       ),
                       Text(
                         '${next.payment.format()} · due '
@@ -56,7 +56,7 @@ class MortgageDueCard extends ConsumerWidget {
                     ],
                   ),
                 ),
-                Icon(Icons.chevron_right_rounded, color: kora.muted),
+                Icon(Icons.chevron_right_rounded, color: tally.muted),
               ],
             ),
           ),

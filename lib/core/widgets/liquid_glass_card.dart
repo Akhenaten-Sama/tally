@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../theme/kora_colors.dart';
+import '../theme/tally_colors.dart';
 
 /// A brand-coloured card with a "liquid glass" finish: glowing colour
 /// blobs, drifting concentric rings, a glassy top highlight and a slow
@@ -39,7 +39,7 @@ class _LiquidGlassCardState extends State<LiquidGlassCard>
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     final reduceMotion = MediaQuery.disableAnimationsOf(context);
     final radius = BorderRadius.circular(widget.radius);
 
@@ -48,7 +48,7 @@ class _LiquidGlassCardState extends State<LiquidGlassCard>
         borderRadius: radius,
         boxShadow: [
           BoxShadow(
-            color: kora.card.withValues(alpha: 0.35),
+            color: tally.card.withValues(alpha: 0.35),
             blurRadius: 28,
             offset: const Offset(0, 14),
           ),
@@ -61,10 +61,10 @@ class _LiquidGlassCardState extends State<LiquidGlassCard>
             progress: reduceMotion
                 ? const AlwaysStoppedAnimation(0.2)
                 : _motion,
-            base: kora.card,
-            bright: kora.bright,
-            accent: kora.accent,
-            secondary: kora.secondary,
+            base: tally.card,
+            bright: tally.bright,
+            accent: tally.accent,
+            secondary: tally.secondary,
             radius: widget.radius,
           ),
           child: Padding(padding: widget.padding, child: widget.child),

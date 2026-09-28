@@ -1,14 +1,14 @@
 import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kora/core/data/database.dart';
-import 'package:kora/core/data/demo_seeder.dart';
-import 'package:kora/core/errors/app_exception.dart';
-import 'package:kora/core/money/money.dart';
-import 'package:kora/core/network/mock_network.dart';
-import 'package:kora/features/mortgage/data/mortgage_repository.dart';
-import 'package:kora/features/mortgage/domain/mortgage.dart';
-import 'package:kora/features/transactions/domain/bank_transaction.dart';
+import 'package:tally/core/data/database.dart';
+import 'package:tally/core/data/demo_seeder.dart';
+import 'package:tally/core/errors/app_exception.dart';
+import 'package:tally/core/money/money.dart';
+import 'package:tally/core/network/mock_network.dart';
+import 'package:tally/features/mortgage/data/mortgage_repository.dart';
+import 'package:tally/features/mortgage/domain/mortgage.dart';
+import 'package:tally/features/transactions/domain/bank_transaction.dart';
 
 void main() {
   late AppDatabase db;

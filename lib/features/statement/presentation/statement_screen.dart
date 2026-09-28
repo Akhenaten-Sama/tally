@@ -8,7 +8,7 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../../core/brand/brand.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../../account/data/account_repository.dart';
 import '../../profile/data/profile_repository.dart';
 import '../../transactions/data/transaction_repository.dart';
@@ -118,7 +118,7 @@ class _StatementScreenState extends ConsumerState<StatementScreen> {
             from: _range.start,
             to: _range.end,
           );
-    final kora = context.kora;
+    final tally = context.tally;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Account statement')),
@@ -128,7 +128,7 @@ class _StatementScreenState extends ConsumerState<StatementScreen> {
           Text(
             'Choose a period, then download a PDF you can save, print or '
             'send to your employer or embassy.',
-            style: TextStyle(color: kora.muted),
+            style: TextStyle(color: tally.muted),
           ),
           const SizedBox(height: 16),
           Wrap(
@@ -148,9 +148,9 @@ class _StatementScreenState extends ConsumerState<StatementScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: kora.surface,
+                color: tally.surface,
                 borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: kora.border),
+                border: Border.all(color: tally.border),
               ),
               child: Column(
                 children: [
@@ -205,7 +205,7 @@ class _Row extends StatelessWidget {
     padding: const EdgeInsets.symmetric(vertical: 5),
     child: Row(
       children: [
-        Text(label, style: TextStyle(color: context.kora.muted)),
+        Text(label, style: TextStyle(color: context.tally.muted)),
         const Spacer(),
         Text(
           value,

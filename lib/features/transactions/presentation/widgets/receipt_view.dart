@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_theme.dart';
-import '../../../../core/theme/kora_colors.dart';
+import '../../../../core/theme/tally_colors.dart';
 import '../../../../core/utils/formatters.dart';
 import '../../domain/bank_transaction.dart';
 import 'transaction_tile.dart';
@@ -17,28 +17,28 @@ class ReceiptView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = transaction;
-    final kora = context.kora;
+    final tally = context.tally;
     final isTransfer = t.category == TxnCategory.transfer;
     final labels = _labelsFor(t.category);
 
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: kora.surface,
+        color: tally.surface,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: kora.border),
+        border: Border.all(color: tally.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              BrandLogo(height: 44, wordmarkColor: kora.card),
+              BrandLogo(height: 44, wordmarkColor: tally.card),
               const Spacer(),
               Text(
                 'Transaction receipt',
                 style: context.textTheme.labelMedium?.copyWith(
-                  color: kora.muted,
+                  color: tally.muted,
                 ),
               ),
             ],
@@ -55,7 +55,7 @@ class ReceiptView extends StatelessWidget {
           const SizedBox(height: 8),
           Center(child: StatusPill(status: t.status)),
           const SizedBox(height: 20),
-          Divider(color: kora.border),
+          Divider(color: tally.border),
           const SizedBox(height: 8),
           _Row('Date', formatDateTime(t.createdAt)),
           _Row('Type', t.category.label),
@@ -84,7 +84,7 @@ class ReceiptView extends StatelessWidget {
           Text(
             'Thank you for banking with ${Brand.current.name}.',
             textAlign: TextAlign.center,
-            style: context.textTheme.bodySmall?.copyWith(color: kora.muted),
+            style: context.textTheme.bodySmall?.copyWith(color: tally.muted),
           ),
         ],
       ),
@@ -104,7 +104,7 @@ class _Row extends StatelessWidget {
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: TextStyle(color: context.kora.muted)),
+        Text(label, style: TextStyle(color: context.tally.muted)),
         const SizedBox(width: 16),
         Expanded(
           child: Text(

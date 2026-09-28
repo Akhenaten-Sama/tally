@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kora/features/auth/domain/phone_number.dart';
+import 'package:tally/features/auth/domain/phone_number.dart';
 
 void main() {
   test('accepts the common ways Nigerians write their number', () {

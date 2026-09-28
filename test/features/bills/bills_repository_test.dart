@@ -1,15 +1,15 @@
 import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kora/core/data/database.dart';
-import 'package:kora/core/data/mock_ledger.dart';
-import 'package:kora/core/errors/app_exception.dart';
-import 'package:kora/core/money/money.dart';
-import 'package:kora/core/network/mock_network.dart';
-import 'package:kora/features/auth/domain/phone_number.dart';
-import 'package:kora/features/bills/data/bills_repository.dart';
-import 'package:kora/features/bills/domain/billers.dart';
-import 'package:kora/features/transactions/domain/bank_transaction.dart';
+import 'package:tally/core/data/database.dart';
+import 'package:tally/core/data/mock_ledger.dart';
+import 'package:tally/core/errors/app_exception.dart';
+import 'package:tally/core/money/money.dart';
+import 'package:tally/core/network/mock_network.dart';
+import 'package:tally/features/auth/domain/phone_number.dart';
+import 'package:tally/features/bills/data/bills_repository.dart';
+import 'package:tally/features/bills/domain/billers.dart';
+import 'package:tally/features/transactions/domain/bank_transaction.dart';
 
 void main() {
   late AppDatabase db;

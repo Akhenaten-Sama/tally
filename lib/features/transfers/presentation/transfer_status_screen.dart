@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../../../core/widgets/error_view.dart';
 import '../../transactions/data/transaction_repository.dart';
 import '../../transactions/domain/bank_transaction.dart';
@@ -51,19 +51,19 @@ class _Outcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = transaction;
-    final kora = context.kora;
+    final tally = context.tally;
     final isTransfer = t.category == TxnCategory.transfer;
     final (successTitle, successBody) = _successCopy(t);
     final (icon, color, title, body) = switch (t.status) {
       TxnStatus.successful => (
         Icons.check_rounded,
-        kora.credit,
+        tally.credit,
         successTitle,
         successBody,
       ),
       TxnStatus.pending => (
         Icons.hourglass_top_rounded,
-        kora.pending,
+        tally.pending,
         isTransfer ? 'Transfer processing' : 'Payment processing',
         "${isTransfer ? 'The receiving bank' : 'The provider'} hasn't "
             'confirmed yet. This usually takes under a minute, and this '
@@ -117,7 +117,7 @@ class _Outcome extends StatelessWidget {
         Text(
           body,
           textAlign: TextAlign.center,
-          style: context.textTheme.bodyLarge?.copyWith(color: kora.muted),
+          style: context.textTheme.bodyLarge?.copyWith(color: tally.muted),
         ),
         if (token != null) ...[
           const SizedBox(height: 20),
@@ -186,13 +186,13 @@ class _TokenCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 12, 8, 12),
       decoration: BoxDecoration(
-        color: kora.surface,
+        color: tally.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: kora.border),
+        border: Border.all(color: tally.border),
       ),
       child: Row(
         children: [

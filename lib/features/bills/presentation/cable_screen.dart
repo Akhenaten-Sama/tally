@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/errors/app_exception.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../data/bills_repository.dart';
 import '../domain/billers.dart';
 import 'pay_bill.dart';
@@ -169,7 +169,7 @@ class _PackageTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     return Semantics(
       button: true,
       selected: selected,
@@ -180,10 +180,10 @@ class _PackageTile extends StatelessWidget {
           duration: const Duration(milliseconds: 150),
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
-            color: kora.surface,
+            color: tally.surface,
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
-              color: selected ? kora.debit : kora.border,
+              color: selected ? tally.debit : tally.border,
               width: selected ? 2 : 1,
             ),
           ),

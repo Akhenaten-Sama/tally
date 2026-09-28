@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_theme.dart';
-import '../../../../core/theme/kora_colors.dart';
+import '../../../../core/theme/tally_colors.dart';
 import '../../domain/amortization.dart';
 
 final _date = DateFormat('d MMM yyyy');
@@ -23,7 +23,7 @@ class InstallmentTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     final i = installment;
 
     return SizedBox(
@@ -33,17 +33,17 @@ class InstallmentTile extends StatelessWidget {
           CircleAvatar(
             radius: 18,
             backgroundColor: isPaid
-                ? kora.credit.withValues(alpha: 0.15)
+                ? tally.credit.withValues(alpha: 0.15)
                 : isNext
-                ? kora.accent
-                : kora.border,
+                ? tally.accent
+                : tally.border,
             child: isPaid
-                ? Icon(Icons.check_rounded, size: 18, color: kora.credit)
+                ? Icon(Icons.check_rounded, size: 18, color: tally.credit)
                 : Text(
                     '${i.number}',
                     style: context.textTheme.labelSmall?.copyWith(
                       fontWeight: FontWeight.w700,
-                      color: isNext ? kora.onAccent : kora.debit,
+                      color: isNext ? tally.onAccent : tally.debit,
                     ),
                   ),
           ),
@@ -61,7 +61,7 @@ class InstallmentTile extends StatelessWidget {
                   'Principal ${i.principal.format(showKobo: false)} · '
                   'Interest ${i.interest.format(showKobo: false)}',
                   style: context.textTheme.bodySmall?.copyWith(
-                    color: kora.muted,
+                    color: tally.muted,
                   ),
                 ),
               ],
@@ -76,7 +76,7 @@ class InstallmentTile extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontFeatures: amountFeatures,
-                  color: isPaid ? kora.muted : kora.debit,
+                  color: isPaid ? tally.muted : tally.debit,
                 ),
               ),
               Text(
@@ -86,7 +86,7 @@ class InstallmentTile extends StatelessWidget {
                     ? 'Next due'
                     : 'Bal. ${i.balanceAfter.format(showKobo: false)}',
                 style: context.textTheme.bodySmall?.copyWith(
-                  color: isNext ? kora.secondary : kora.muted,
+                  color: isNext ? tally.secondary : tally.muted,
                   fontWeight: isNext ? FontWeight.w700 : null,
                 ),
               ),

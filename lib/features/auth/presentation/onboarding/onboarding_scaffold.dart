@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/kora_colors.dart';
+import '../../../../core/theme/tally_colors.dart';
 
 /// Shared layout for sign-up steps: progress, title, subtitle, content.
 class OnboardingScaffold extends StatelessWidget {
@@ -30,7 +30,7 @@ class OnboardingScaffold extends StatelessWidget {
             child: LinearProgressIndicator(
               value: step / totalSteps,
               minHeight: 6,
-              backgroundColor: context.kora.border,
+              backgroundColor: context.tally.border,
             ),
           ),
         ),
@@ -54,7 +54,7 @@ class OnboardingScaffold extends StatelessWidget {
                 Text(
                   subtitle,
                   style: context.textTheme.bodyLarge?.copyWith(
-                    color: context.kora.muted,
+                    color: context.tally.muted,
                   ),
                 ),
                 const SizedBox(height: 24),

@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/routes.dart';
 import '../../../core/brand/brand.dart';
 import '../../../core/brand/brand_logo.dart';
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -15,13 +15,13 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final brand = Brand.current;
-    final kora = context.kora;
+    final tally = context.tally;
     final text = context.textTheme;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
-        backgroundColor: kora.card,
+        backgroundColor: tally.card,
         body: Column(
           children: [
             const Expanded(child: _Hero()),
@@ -48,8 +48,8 @@ class WelcomeScreen extends StatelessWidget {
                     const SizedBox(height: 28),
                     FilledButton(
                       style: FilledButton.styleFrom(
-                        backgroundColor: kora.accent,
-                        foregroundColor: kora.onAccent,
+                        backgroundColor: tally.accent,
+                        foregroundColor: tally.onAccent,
                       ),
                       onPressed: () => context.push(Routes.onboardingPhone),
                       child: const Text('Create an account'),
@@ -167,7 +167,7 @@ class _HeroState extends State<_Hero> with SingleTickerProviderStateMixin {
                 right: 0,
                 bottom: photoHeight - 2,
                 height: 4,
-                child: ColoredBox(color: context.kora.card),
+                child: ColoredBox(color: context.tally.card),
               )
             else
               Center(

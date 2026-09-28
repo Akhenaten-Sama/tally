@@ -101,7 +101,7 @@ class SendMoneyController extends Notifier<SendMoneyDraft> {
   }
 
   static String _newReference() =>
-      'KORA${const Uuid().v4().replaceAll('-', '').substring(0, 16).toUpperCase()}';
+      'TALLY${const Uuid().v4().replaceAll('-', '').substring(0, 16).toUpperCase()}';
 }
 
 /// Lives only while the send flow is on screen; the next flow starts fresh.

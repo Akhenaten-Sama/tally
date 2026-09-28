@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_theme.dart';
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../../../core/utils/formatters.dart';
 import '../../../core/widgets/error_view.dart';
 import '../data/mortgage_repository.dart';
@@ -36,7 +36,7 @@ class ApplicationScreen extends ConsumerWidget {
                 '${ApplicationStage.stageDuration.inSeconds} seconds.',
                 textAlign: TextAlign.center,
                 style: context.textTheme.bodySmall?.copyWith(
-                  color: context.kora.muted,
+                  color: context.tally.muted,
                 ),
               ),
           ],
@@ -55,12 +55,12 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     final a = application;
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: kora.card,
+        color: tally.card,
         borderRadius: BorderRadius.circular(24),
       ),
       child: Column(
@@ -68,12 +68,12 @@ class _Header extends StatelessWidget {
         children: [
           Text(
             a.product.name,
-            style: TextStyle(color: kora.onCard.withValues(alpha: 0.75)),
+            style: TextStyle(color: tally.onCard.withValues(alpha: 0.75)),
           ),
           Text(
             a.amount.format(showKobo: false),
             style: context.textTheme.headlineMedium?.copyWith(
-              color: kora.onCard,
+              color: tally.onCard,
               fontWeight: FontWeight.w800,
               fontFeatures: amountFeatures,
             ),
@@ -81,17 +81,17 @@ class _Header extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             '${a.monthlyPayment.format()} a month · ${a.tenorMonths ~/ 12} years',
-            style: TextStyle(color: kora.onCard),
+            style: TextStyle(color: tally.onCard),
           ),
           Text(
             a.property,
-            style: TextStyle(color: kora.onCard.withValues(alpha: 0.75)),
+            style: TextStyle(color: tally.onCard.withValues(alpha: 0.75)),
           ),
           const SizedBox(height: 12),
           Text(
             'Ref ${a.id} · submitted ${formatDateTime(a.submittedAt)}',
             style: context.textTheme.bodySmall?.copyWith(
-              color: kora.onCard.withValues(alpha: 0.75),
+              color: tally.onCard.withValues(alpha: 0.75),
             ),
           ),
         ],
@@ -107,7 +107,7 @@ class _Timeline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     const stages = ApplicationStage.values;
     final finished = current == ApplicationStage.disbursed;
 
@@ -131,8 +131,8 @@ class _Timeline extends StatelessWidget {
                           child: Container(
                             width: 2,
                             color: stage.index < current.index
-                                ? kora.credit
-                                : kora.border,
+                                ? tally.credit
+                                : tally.border,
                           ),
                         ),
                     ],
@@ -151,15 +151,15 @@ class _Timeline extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               color: stage.index > current.index
-                                  ? kora.muted
-                                  : kora.debit,
+                                  ? tally.muted
+                                  : tally.debit,
                             ),
                           ),
                         if (stage.index <= current.index)
                           if (Brand.current.showDemoHints)
                             Text(
                               stage.description,
-                              style: TextStyle(color: kora.muted),
+                              style: TextStyle(color: tally.muted),
                             ),
                       ],
                     ),
@@ -181,7 +181,7 @@ class _Marker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       width: 28,
@@ -189,12 +189,12 @@ class _Marker extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: done
-            ? kora.credit
+            ? tally.credit
             : active
-            ? kora.accent
-            : kora.surface,
+            ? tally.accent
+            : tally.surface,
         border: Border.all(
-          color: done || active ? Colors.transparent : kora.border,
+          color: done || active ? Colors.transparent : tally.border,
           width: 2,
         ),
       ),
@@ -205,7 +205,7 @@ class _Marker extends StatelessWidget {
               padding: const EdgeInsets.all(7),
               child: CircularProgressIndicator(
                 strokeWidth: 2,
-                color: kora.onAccent,
+                color: tally.onAccent,
               ),
             )
           : null,

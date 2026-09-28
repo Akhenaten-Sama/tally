@@ -5,7 +5,7 @@ import '../../features/auth/data/auth_controller.dart';
 import '../data/database.dart';
 import '../data/demo_seeder.dart';
 import '../network/mock_network.dart';
-import '../theme/kora_colors.dart';
+import '../theme/tally_colors.dart';
 
 Future<void> showDebugMenu(BuildContext context) => showModalBottomSheet<void>(
   context: context,
@@ -33,7 +33,7 @@ class _DebugMenu extends ConsumerWidget {
           Text(
             'Simulate what a real bank backend does to the app.',
             style: context.textTheme.bodyMedium?.copyWith(
-              color: context.kora.muted,
+              color: context.tally.muted,
             ),
           ),
           const SizedBox(height: 16),

@@ -179,7 +179,7 @@ class DemoSeeder {
       return TransactionsCompanion.insert(
         id: 'seed_$n',
         accountId: accountId,
-        reference: 'KORA-SEED-${n.toString().padLeft(4, '0')}',
+        reference: 'TALLY-SEED-${n.toString().padLeft(4, '0')}',
         direction: direction,
         category: category,
         status: status,

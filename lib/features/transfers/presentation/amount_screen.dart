@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../../../core/widgets/number_pad.dart';
 import '../../account/data/account_repository.dart';
 import 'send_money_controller.dart';
@@ -36,7 +36,7 @@ class AmountScreen extends ConsumerWidget {
     final draft = ref.watch(sendMoneyProvider);
     final controller = ref.read(sendMoneyProvider.notifier);
     final balance = ref.watch(primaryAccountProvider).value?.balance;
-    final kora = context.kora;
+    final tally = context.tally;
 
     final amount = draft.amount.money;
     final overBalance = balance != null && draft.total > balance;
@@ -49,12 +49,12 @@ class AmountScreen extends ConsumerWidget {
       helperColor = AppColors.error;
     } else if (amount.isZero) {
       helper = balance == null ? '' : 'Balance: ${balance.format()}';
-      helperColor = kora.muted;
+      helperColor = tally.muted;
     } else {
       helper = draft.fee.isZero
           ? 'No fee to ${Brand.current.shortName} accounts'
           : 'Fee: ${draft.fee.format()}';
-      helperColor = kora.muted;
+      helperColor = tally.muted;
     }
 
     return Scaffold(
@@ -79,7 +79,7 @@ class AmountScreen extends ConsumerWidget {
                     style: context.textTheme.displayMedium?.copyWith(
                       fontWeight: FontWeight.w800,
                       fontFeatures: amountFeatures,
-                      color: amount.isZero ? kora.muted : kora.debit,
+                      color: amount.isZero ? tally.muted : tally.debit,
                     ),
                   ),
                 ),

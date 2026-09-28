@@ -119,7 +119,7 @@ class DemoMeta extends Table {
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor])
-    : super(executor ?? driftDatabase(name: 'kora'));
+    : super(executor ?? driftDatabase(name: 'tally'));
 
   @override
   int get schemaVersion => 4;

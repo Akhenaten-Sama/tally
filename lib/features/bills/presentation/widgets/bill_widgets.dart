@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/kora_colors.dart';
+import '../../../../core/theme/tally_colors.dart';
 
 /// Round logo-style badge for a network or biller.
 class BillerBadge extends StatelessWidget {
@@ -53,7 +53,7 @@ class BillerChoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     return Expanded(
       child: Semantics(
         button: true,
@@ -68,10 +68,10 @@ class BillerChoice extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 4),
             padding: const EdgeInsets.symmetric(vertical: 10),
             decoration: BoxDecoration(
-              color: kora.surface,
+              color: tally.surface,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: selected ? kora.debit : kora.border,
+                color: selected ? tally.debit : tally.border,
                 width: selected ? 2 : 1,
               ),
             ),
@@ -108,16 +108,16 @@ class CustomerBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: kora.credit.withValues(alpha: 0.1),
+        color: tally.credit.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         children: [
-          Icon(Icons.verified_rounded, size: 18, color: kora.credit),
+          Icon(Icons.verified_rounded, size: 18, color: tally.credit),
           const SizedBox(width: 8),
           Expanded(
             child: Column(
@@ -126,12 +126,12 @@ class CustomerBanner extends StatelessWidget {
                 Text(
                   name,
                   style: TextStyle(
-                    color: kora.credit,
+                    color: tally.credit,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 if (address != null)
-                  Text(address!, style: TextStyle(color: kora.muted)),
+                  Text(address!, style: TextStyle(color: tally.muted)),
               ],
             ),
           ),

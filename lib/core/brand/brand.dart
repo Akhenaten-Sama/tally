@@ -72,10 +72,10 @@ class Brand {
   TextTheme textTheme(TextTheme base) =>
       GoogleFonts.getTextTheme(fontFamily, base);
 
-  static const kora = Brand(
-    id: 'kora',
-    name: 'Kora',
-    shortName: 'Kora',
+  static const tally = Brand(
+    id: 'tally',
+    name: 'Tally',
+    shortName: 'Tally',
     primary: Color(0xFF0E3B2E),
     bright: Color(0xFF14463A),
     accent: Color(0xFFC8F169),
@@ -117,9 +117,9 @@ class Brand {
 
   static final Brand current = switch (const String.fromEnvironment(
     'BRAND',
-    defaultValue: 'kora',
+    defaultValue: 'tally',
   )) {
     'cmb' => cmb,
-    _ => kora,
+    _ => tally,
   };
 }

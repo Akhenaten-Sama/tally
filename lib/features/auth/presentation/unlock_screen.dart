@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/security/biometrics.dart';
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../../../core/widgets/initials_avatar.dart';
 import '../../account/data/account_repository.dart';
 import '../data/auth_controller.dart';
@@ -71,7 +71,7 @@ class _UnlockScreenState extends ConsumerState<UnlockScreen> {
               const SizedBox(height: 4),
               Text(
                 'Enter your passcode',
-                style: TextStyle(color: context.kora.muted),
+                style: TextStyle(color: context.tally.muted),
               ),
               const Spacer(),
               CodeEntry(

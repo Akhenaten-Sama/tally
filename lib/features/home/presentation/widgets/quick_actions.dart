@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/routes.dart';
 import '../../../../core/brand/brand.dart';
-import '../../../../core/theme/kora_colors.dart';
+import '../../../../core/theme/tally_colors.dart';
 
 class QuickActions extends StatelessWidget {
   const QuickActions({super.key});
@@ -54,7 +54,7 @@ class _Action extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final kora = context.kora;
+    final tally = context.tally;
     return Semantics(
       button: true,
       label: label,
@@ -70,11 +70,11 @@ class _Action extends StatelessWidget {
                 width: 56,
                 height: 56,
                 decoration: BoxDecoration(
-                  color: kora.surface,
+                  color: tally.surface,
                   borderRadius: BorderRadius.circular(18),
-                  border: Border.all(color: kora.border),
+                  border: Border.all(color: tally.border),
                 ),
-                child: Icon(icon, color: kora.debit),
+                child: Icon(icon, color: tally.debit),
               ),
               const SizedBox(height: 8),
               Text(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../brand/brand.dart';
-import 'kora_colors.dart';
+import 'tally_colors.dart';
 
 /// Tabular figures keep amounts from shifting width as digits change.
 const amountFeatures = [FontFeature.tabularFigures()];
@@ -9,15 +9,19 @@ const amountFeatures = [FontFeature.tabularFigures()];
 abstract final class AppTheme {
   static ThemeData light([Brand? brand]) {
     final b = brand ?? Brand.current;
-    return _build(Brightness.light, b, KoraColors.light(b));
+    return _build(Brightness.light, b, TallyColors.light(b));
   }
 
   static ThemeData dark([Brand? brand]) {
     final b = brand ?? Brand.current;
-    return _build(Brightness.dark, b, KoraColors.dark(b));
+    return _build(Brightness.dark, b, TallyColors.dark(b));
   }
 
-  static ThemeData _build(Brightness brightness, Brand brand, KoraColors kora) {
+  static ThemeData _build(
+    Brightness brightness,
+    Brand brand,
+    TallyColors tally,
+  ) {
     final isDark = brightness == Brightness.dark;
     final scheme =
         ColorScheme.fromSeed(
@@ -30,37 +34,37 @@ abstract final class AppTheme {
           onPrimary: isDark ? brand.onAccent : Colors.white,
           secondary: brand.accent,
           onSecondary: brand.onAccent,
-          surface: kora.surface,
-          onSurface: kora.debit,
+          surface: tally.surface,
+          onSurface: tally.debit,
           error: AppColors.error,
-          outline: kora.border,
+          outline: tally.border,
         );
 
     final base = ThemeData(
       useMaterial3: true,
       brightness: brightness,
       colorScheme: scheme,
-      scaffoldBackgroundColor: kora.background,
+      scaffoldBackgroundColor: tally.background,
     );
     final text = brand
         .textTheme(base.textTheme)
-        .apply(bodyColor: kora.debit, displayColor: kora.debit);
+        .apply(bodyColor: tally.debit, displayColor: tally.debit);
     final rounded = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(16),
     );
 
     return base.copyWith(
       textTheme: text,
-      extensions: [kora],
+      extensions: [tally],
       appBarTheme: AppBarTheme(
-        backgroundColor: kora.background,
+        backgroundColor: tally.background,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         centerTitle: false,
         titleTextStyle: text.titleLarge?.copyWith(fontWeight: FontWeight.w700),
       ),
       navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: kora.surface,
+        backgroundColor: tally.surface,
         surfaceTintColor: Colors.transparent,
         indicatorColor: brand.accent.withValues(alpha: isDark ? 0.25 : 0.6),
         labelTextStyle: WidgetStatePropertyAll(
@@ -78,22 +82,22 @@ abstract final class AppTheme {
         style: OutlinedButton.styleFrom(
           minimumSize: const Size.fromHeight(56),
           shape: rounded,
-          side: BorderSide(color: kora.border),
+          side: BorderSide(color: tally.border),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: kora.surface,
+        fillColor: tally.surface,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: kora.border),
+          borderSide: BorderSide(color: tally.border),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: kora.border),
+          borderSide: BorderSide(color: tally.border),
         ),
       ),
-      dividerTheme: DividerThemeData(color: kora.border, space: 1),
+      dividerTheme: DividerThemeData(color: tally.border, space: 1),
       snackBarTheme: const SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
       ),

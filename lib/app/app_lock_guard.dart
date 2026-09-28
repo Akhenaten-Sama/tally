@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/brand/brand_logo.dart';
-import '../core/theme/kora_colors.dart';
+import '../core/theme/tally_colors.dart';
 import '../features/auth/data/auth_controller.dart';
 import '../features/auth/presentation/unlock_screen.dart';
 
@@ -83,7 +83,7 @@ class _PrivacyCover extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ColoredBox(
-    color: context.kora.card,
+    color: context.tally.card,
     child: const Center(child: BrandLogo(height: 96)),
   );
 }

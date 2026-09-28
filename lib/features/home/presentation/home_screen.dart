@@ -6,7 +6,7 @@ import '../../../app/routes.dart';
 import '../../../core/brand/brand.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/debug/debug_menu.dart';
-import '../../../core/theme/kora_colors.dart';
+import '../../../core/theme/tally_colors.dart';
 import '../../../core/utils/formatters.dart';
 import '../../../core/widgets/error_view.dart';
 import '../../account/data/account_repository.dart';
@@ -86,7 +86,7 @@ class HomeScreen extends ConsumerWidget {
                         'No transactions yet. Money you send and receive '
                         'shows up here.',
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: context.kora.muted),
+                        style: TextStyle(color: context.tally.muted),
                       ),
                     ),
                   ),
@@ -134,11 +134,11 @@ class _Header extends StatelessWidget {
               : null,
           child: CircleAvatar(
             radius: 22,
-            backgroundColor: context.kora.accent,
+            backgroundColor: context.tally.accent,
             child: Text(
               name.isEmpty ? '' : name[0],
               style: context.textTheme.titleMedium?.copyWith(
-                color: context.kora.onAccent,
+                color: context.tally.onAccent,
                 fontWeight: FontWeight.w800,
               ),
             ),
@@ -152,7 +152,7 @@ class _Header extends StatelessWidget {
               Text(
                 greeting(),
                 style: context.textTheme.bodySmall?.copyWith(
-                  color: context.kora.muted,
+                  color: context.tally.muted,
                 ),
               ),
               Text(
@@ -182,7 +182,7 @@ class _NotificationBell extends ConsumerWidget {
       icon: Badge(
         isLabelVisible: unread > 0,
         label: Text(unread > 9 ? '9+' : '$unread'),
-        backgroundColor: context.kora.bright,
+        backgroundColor: context.tally.bright,
         child: const Icon(Icons.notifications_none_rounded),
       ),
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/kora_colors.dart';
+import '../../../../core/theme/tally_colors.dart';
 import '../../domain/bank.dart';
 
 Future<Bank?> showBankPicker(BuildContext context, {Bank? selected}) =>
@@ -52,7 +52,7 @@ class _BankPickerState extends State<_BankPicker> {
                 ? Center(
                     child: Text(
                       'No bank matches "$_query"',
-                      style: TextStyle(color: context.kora.muted),
+                      style: TextStyle(color: context.tally.muted),
                     ),
                   )
                 : ListView.builder(
@@ -68,14 +68,14 @@ class _BankPickerState extends State<_BankPicker> {
                         ),
                         leading: CircleAvatar(
                           backgroundColor: bank.isInternal
-                              ? context.kora.card
-                              : context.kora.border,
+                              ? context.tally.card
+                              : context.tally.border,
                           child: Text(
                             bank.name[0],
                             style: TextStyle(
                               color: bank.isInternal
-                                  ? context.kora.accent
-                                  : context.kora.debit,
+                                  ? context.tally.accent
+                                  : context.tally.debit,
                               fontWeight: FontWeight.w800,
                             ),
                           ),

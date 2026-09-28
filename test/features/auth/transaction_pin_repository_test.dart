@@ -1,9 +1,9 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kora/core/errors/app_exception.dart';
-import 'package:kora/core/network/mock_network.dart';
-import 'package:kora/core/security/credential_store.dart';
-import 'package:kora/features/auth/data/transaction_pin_repository.dart';
+import 'package:tally/core/errors/app_exception.dart';
+import 'package:tally/core/network/mock_network.dart';
+import 'package:tally/core/security/credential_store.dart';
+import 'package:tally/features/auth/data/transaction_pin_repository.dart';
 
 void main() {
   late DateTime now;

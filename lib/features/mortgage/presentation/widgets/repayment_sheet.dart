@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_theme.dart';
-import '../../../../core/theme/kora_colors.dart';
+import '../../../../core/theme/tally_colors.dart';
 import '../../../../core/utils/formatters.dart';
 import '../../../account/data/account_repository.dart';
 import '../../domain/mortgage.dart';
@@ -92,7 +92,7 @@ class _Row extends StatelessWidget {
     padding: const EdgeInsets.symmetric(vertical: 6),
     child: Row(
       children: [
-        Text(label, style: TextStyle(color: context.kora.muted)),
+        Text(label, style: TextStyle(color: context.tally.muted)),
         const SizedBox(width: 16),
         Expanded(
           child: Text(

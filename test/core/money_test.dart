@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kora/core/money/money.dart';
+import 'package:tally/core/money/money.dart';
 
 void main() {
   group('Money', () {
