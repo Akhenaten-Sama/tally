@@ -49,3 +49,6 @@ app.*.map.json
 
 # Claude Code local settings (machine-specific)
 .claude/
+
+# Real API keys for live lookups
+/config/keys.json

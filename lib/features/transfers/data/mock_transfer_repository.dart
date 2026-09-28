@@ -4,6 +4,7 @@ import '../../../core/data/database.dart';
 import '../../../core/data/mappers.dart';
 import '../../../core/data/mock_ledger.dart';
 import '../../../core/errors/app_exception.dart';
+import '../../../core/lookups/paystack_name_enquiry.dart';
 import '../../../core/network/mock_network.dart';
 import '../../transactions/domain/bank_transaction.dart';
 import '../domain/bank.dart';
@@ -18,6 +19,7 @@ class MockTransferRepository implements TransferRepository {
     this._db,
     this._network, {
     MockLedger? ledger,
+    this._liveNameEnquiry,
     DateTime Function()? clock,
   }) : _clock = clock ?? DateTime.now,
        _ownsLedger = ledger == null,
@@ -27,6 +29,9 @@ class MockTransferRepository implements TransferRepository {
   final MockNetwork _network;
   final MockLedger _ledger;
   final bool _ownsLedger;
+
+  /// Real lookups for other banks when a Paystack key is configured.
+  final PaystackNameEnquiry? _liveNameEnquiry;
   final DateTime Function() _clock;
 
   @override
@@ -36,6 +41,10 @@ class MockTransferRepository implements TransferRepository {
   }) async {
     if (!RegExp(r'^\d{10}$').hasMatch(accountNumber)) {
       throw const ValidationException('Account number must be 10 digits.');
+    }
+    final live = _liveNameEnquiry;
+    if (live != null && !bank.isInternal) {
+      return live.resolve(bankCode: bank.code, accountNumber: accountNumber);
     }
     await _network.roundTrip();
     return mockAccountName(bank, accountNumber);

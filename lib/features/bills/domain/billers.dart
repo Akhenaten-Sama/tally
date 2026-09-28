@@ -111,19 +111,22 @@ class DataPlan {
 
 /// Electricity distribution companies.
 enum Disco {
-  ikeja('Ikeja Electric', 'IKEDC'),
-  eko('Eko Electricity', 'EKEDC'),
-  abuja('Abuja Electricity', 'AEDC'),
-  ibadan('Ibadan Electricity', 'IBEDC'),
-  portHarcourt('Port Harcourt Electricity', 'PHED'),
-  enugu('Enugu Electricity', 'EEDC'),
-  kano('Kano Electricity', 'KEDCO'),
-  benin('Benin Electricity', 'BEDC');
+  ikeja('Ikeja Electric', 'IKEDC', 'ikeja-electric'),
+  eko('Eko Electricity', 'EKEDC', 'eko-electric'),
+  abuja('Abuja Electricity', 'AEDC', 'abuja-electric'),
+  ibadan('Ibadan Electricity', 'IBEDC', 'ibadan-electric'),
+  portHarcourt('Port Harcourt Electricity', 'PHED', 'portharcourt-electric'),
+  enugu('Enugu Electricity', 'EEDC', 'enugu-electric'),
+  kano('Kano Electricity', 'KEDCO', 'kano-electric'),
+  benin('Benin Electricity', 'BEDC', 'benin-electric');
 
-  const Disco(this.name, this.code);
+  const Disco(this.name, this.code, this.vtpassServiceId);
 
   final String name;
   final String code;
+
+  /// VTpass `serviceID` for live meter verification.
+  final String vtpassServiceId;
 
   /// Band A tariff per kWh, used to show units bought.
   static const tariffPerKwh = Money(20950);
@@ -159,6 +162,9 @@ enum CableProvider {
   final String label;
   final Color color;
   final List<(String, int)> _packages;
+
+  /// VTpass `serviceID` for live smartcard verification.
+  String get vtpassServiceId => name;
 
   List<CablePackage> get packages => [
     for (final (name, kobo) in _packages)

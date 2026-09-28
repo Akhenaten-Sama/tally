@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/data/mock_ledger.dart';
 import '../../../core/errors/app_exception.dart';
+import '../../../core/lookups/lookup_providers.dart';
+import '../../../core/lookups/vtpass_biller_lookup.dart';
 import '../../../core/money/money.dart';
 import '../../../core/network/mock_network.dart';
 import '../../auth/domain/phone_number.dart';
@@ -56,8 +58,15 @@ abstract interface class BillsRepository {
 }
 
 class MockBillsRepository implements BillsRepository {
-  MockBillsRepository(this._ledger, this._network, {Random? random})
-    : _random = random ?? Random.secure();
+  MockBillsRepository(
+    this._ledger,
+    this._network, {
+    this._liveLookup,
+    Random? random,
+  }) : _random = random ?? Random.secure();
+
+  /// Real meter and smartcard checks when VTpass keys are configured.
+  final VtpassBillerLookup? _liveLookup;
 
   final MockLedger _ledger;
   final MockNetwork _network;
@@ -120,6 +129,14 @@ class MockBillsRepository implements BillsRepository {
     if (!RegExp(r'^\d{11,13}$').hasMatch(meterNumber)) {
       throw const ValidationException('Meter numbers are 11 to 13 digits.');
     }
+    final live = _liveLookup;
+    if (live != null) {
+      return live.verifyMeter(
+        disco: disco,
+        type: type,
+        meterNumber: meterNumber,
+      );
+    }
     await _network.roundTrip();
     return _lookup('${disco.code}$meterNumber', withAddress: true);
   }
@@ -160,6 +177,13 @@ class MockBillsRepository implements BillsRepository {
     if (!RegExp(r'^\d{10,11}$').hasMatch(smartcardNumber)) {
       throw const ValidationException(
         'Smartcard and IUC numbers are 10 or 11 digits.',
+      );
+    }
+    final live = _liveLookup;
+    if (live != null) {
+      return live.verifySmartcard(
+        provider: provider,
+        smartcardNumber: smartcardNumber,
       );
     }
     await _network.roundTrip();
@@ -207,5 +231,6 @@ final billsRepositoryProvider = Provider<BillsRepository>(
   (ref) => MockBillsRepository(
     ref.watch(mockLedgerProvider),
     ref.watch(mockNetworkProvider),
+    liveLookup: ref.watch(vtpassBillerLookupProvider),
   ),
 );

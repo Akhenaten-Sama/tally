@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../features/auth/data/auth_controller.dart';
 import '../data/database.dart';
 import '../data/demo_seeder.dart';
+import '../lookups/lookup_keys.dart';
 import '../network/mock_network.dart';
 import '../theme/tally_colors.dart';
 
@@ -86,6 +87,14 @@ class _DebugMenu extends ConsumerWidget {
             selected: {ref.watch(autoLockDelayProvider)},
             onSelectionChanged: (s) =>
                 ref.read(autoLockDelayProvider.notifier).set(s.single),
+          ),
+          const _Label('Live lookups'),
+          Text(
+            'Account names: '
+            '${LookupKeys.hasPaystack ? 'Paystack (live)' : 'simulated'}\n'
+            'Meters & smartcards: '
+            '${LookupKeys.hasVtpass ? 'VTpass (${LookupKeys.vtpassSandbox ? 'sandbox' : 'live'})' : 'simulated'}',
+            style: TextStyle(color: context.tally.muted),
           ),
           const SizedBox(height: 8),
           const Divider(),

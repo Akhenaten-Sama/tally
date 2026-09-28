@@ -46,7 +46,14 @@ sed -i '' \
   -e "s/ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;/ASSETCATALOG_COMPILER_APPICON_NAME = $ICON;/" \
   "$PBXPROJ"
 
-flutter build ios --release --dart-define=BRAND="$BRAND"
+# Live lookup keys, if present (git-ignored; see config/README.md).
+KEY_ARGS=()
+if [ -f config/keys.json ]; then
+  KEY_ARGS=(--dart-define-from-file=config/keys.json)
+  echo "Using live lookup keys from config/keys.json"
+fi
+
+flutter build ios --release --dart-define=BRAND="$BRAND" "${KEY_ARGS[@]}"
 
 DEVICE=${DEVICE:-$(flutter devices --machine 2>/dev/null | python3 -c '
 import json, sys

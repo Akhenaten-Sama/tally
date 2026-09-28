@@ -50,6 +50,7 @@ dependencies:
   share_plus: ^13.3.0
   crypto: ^3.0.7
   pdf: ^3.13.1
+  http: ^1.6.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

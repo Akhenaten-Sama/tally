@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/data/database.dart';
 import '../../../core/data/mock_ledger.dart';
+import '../../../core/lookups/lookup_providers.dart';
 import '../../../core/network/mock_network.dart';
 import '../../transactions/domain/bank_transaction.dart';
 import '../domain/bank.dart';
@@ -30,6 +31,7 @@ final transferRepositoryProvider = Provider<TransferRepository>((ref) {
     ref.watch(databaseProvider),
     ref.watch(mockNetworkProvider),
     ledger: ref.watch(mockLedgerProvider),
+    liveNameEnquiry: ref.watch(paystackNameEnquiryProvider),
   );
   ref.onDispose(repository.dispose);
   return repository;
