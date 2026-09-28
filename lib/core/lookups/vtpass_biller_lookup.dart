@@ -76,10 +76,8 @@ class VtpassBillerLookup {
     } on FormatException {
       throw AccountNotFoundException(notFound);
     }
-    if (response.statusCode == 401 || response.statusCode == 403) {
-      throw const ValidationException(
-        'Biller lookup is unavailable right now. Please try again later.',
-      );
+    if (const {401, 403, 429}.contains(response.statusCode)) {
+      throw const LookupUnavailableException('Biller lookup unavailable');
     }
 
     final content = body['content'];

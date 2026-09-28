@@ -67,3 +67,9 @@ class IncorrectOtpException extends AppException {
     super.message = "That code isn't right. Check the SMS and try again.",
   ]);
 }
+
+/// A live lookup provider refused the request for reasons unrelated to the
+/// account itself (quota, bad key). Callers fall back to simulated lookups.
+class LookupUnavailableException extends AppException {
+  const LookupUnavailableException(super.message);
+}

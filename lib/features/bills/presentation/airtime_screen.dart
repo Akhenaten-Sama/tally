@@ -178,6 +178,7 @@ class _AirtimeScreenState extends ConsumerState<AirtimeScreen> {
                     color: network.color,
                     onColor: network.onColor,
                     size: 52,
+                    asset: network.logoAsset,
                   ),
             label: _kind == TopUpKind.airtime ? 'Airtime' : 'Data bundle',
             value: headerValue,
@@ -234,6 +235,7 @@ class _AirtimeScreenState extends ConsumerState<AirtimeScreen> {
                   label: n.label,
                   color: n.color,
                   onColor: n.onColor,
+                  asset: n.logoAsset,
                   selected: n == network,
                   onTap: () => setState(() {
                     _network = n;

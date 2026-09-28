@@ -13,12 +13,20 @@ class PaystackNameEnquiry {
   final http.Client _client;
   final String _secretKey;
 
+  /// Names already resolved this session, so repeat lookups of the same
+  /// account don't spend quota (test keys allow only 3 a day).
+  final _cache = <String, String>{};
+
   static const _timeout = Duration(seconds: 15);
 
   Future<String> resolve({
     required String bankCode,
     required String accountNumber,
   }) async {
+    final cacheKey = '$bankCode:$accountNumber';
+    final cached = _cache[cacheKey];
+    if (cached != null) return cached;
+
     final uri = Uri.https('api.paystack.co', '/bank/resolve', {
       'account_number': accountNumber,
       'bank_code': bankCode,
@@ -38,14 +46,12 @@ class PaystackNameEnquiry {
     if (response.statusCode == 200 &&
         body?['status'] == true &&
         name is String) {
-      return name.toUpperCase();
+      return _cache[cacheKey] = name.toUpperCase();
     }
     throw switch (response.statusCode) {
-      401 => const ValidationException(
-        'Account lookup is unavailable right now. Please try again later.',
-      ),
-      429 => const ValidationException(
-        'Too many lookups in a short time. Try again in a minute.',
+      // Quota or key problems say nothing about the account itself.
+      401 || 403 || 429 => LookupUnavailableException(
+        body?['message'] as String? ?? 'Lookup unavailable',
       ),
       _ => const AccountNotFoundException(),
     };

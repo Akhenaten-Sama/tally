@@ -15,6 +15,7 @@ class BillerBadge extends StatelessWidget {
     required this.color,
     this.onColor = Colors.white,
     this.size = 44,
+    this.asset,
   });
 
   final String label;
@@ -22,21 +23,43 @@ class BillerBadge extends StatelessWidget {
   final Color onColor;
   final double size;
 
+  /// A round logo image; when null a text badge is drawn.
+  final String? asset;
+
   @override
-  Widget build(BuildContext context) => Container(
-    width: size,
-    height: size,
-    alignment: Alignment.center,
-    decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-    child: Text(
-      label.length <= 3 ? label : label.substring(0, 1),
-      style: TextStyle(
-        color: onColor,
-        fontWeight: FontWeight.w900,
-        fontSize: size * (label.length <= 3 ? 0.28 : 0.42),
+  Widget build(BuildContext context) {
+    final image = asset;
+    if (image != null) {
+      return Semantics(
+        label: label,
+        image: true,
+        child: Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            // Keeps white logos (Airtel) visible on white cards.
+            border: Border.all(color: context.tally.border),
+          ),
+          child: ClipOval(child: Image.asset(image, fit: BoxFit.cover)),
+        ),
+      );
+    }
+    return Container(
+      width: size,
+      height: size,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+      child: Text(
+        label.length <= 3 ? label : label.substring(0, 1),
+        style: TextStyle(
+          color: onColor,
+          fontWeight: FontWeight.w900,
+          fontSize: size * (label.length <= 3 ? 0.28 : 0.42),
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 /// A tappable option in a horizontal picker (networks, providers).
@@ -48,6 +71,7 @@ class BillerChoice extends StatelessWidget {
     required this.selected,
     required this.onTap,
     this.onColor = Colors.white,
+    this.asset,
   });
 
   final String label;
@@ -55,6 +79,7 @@ class BillerChoice extends StatelessWidget {
   final Color onColor;
   final bool selected;
   final VoidCallback onTap;
+  final String? asset;
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +112,7 @@ class BillerChoice extends StatelessWidget {
                   color: color,
                   onColor: onColor,
                   size: 36,
+                  asset: asset,
                 ),
                 const SizedBox(height: 6),
                 Text(
@@ -504,6 +530,7 @@ class SavedBillerStrip extends StatelessWidget {
                       color: network.color,
                       onColor: network.onColor,
                       size: 32,
+                      asset: network.logoAsset,
                     )
                   else if (item.art case final art?)
                     BillIllustration(art: art, size: 40)

@@ -46,6 +46,14 @@ enum MobileNetwork {
   /// First three digits after the leading 0.
   final List<String> prefixes;
 
+  /// Official logo as a round badge; null draws a text badge instead.
+  String? get logoAsset => switch (this) {
+    mtn => 'assets/networks/mtn.png',
+    airtel => 'assets/networks/airtel.png',
+    glo => 'assets/networks/glo.png',
+    nineMobile => 'assets/networks/9mobile.png',
+  };
+
   /// Best guess from the number's prefix. Numbers can be ported between
   /// networks, so the user can still change it.
   static MobileNetwork? detect(PhoneNumber phone) {

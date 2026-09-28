@@ -131,11 +131,15 @@ class MockBillsRepository implements BillsRepository {
     }
     final live = _liveLookup;
     if (live != null) {
-      return live.verifyMeter(
-        disco: disco,
-        type: type,
-        meterNumber: meterNumber,
-      );
+      try {
+        return await live.verifyMeter(
+          disco: disco,
+          type: type,
+          meterNumber: meterNumber,
+        );
+      } on LookupUnavailableException {
+        // Fall back to the simulated lookup below.
+      }
     }
     await _network.roundTrip();
     return _lookup('${disco.code}$meterNumber', withAddress: true);
@@ -181,10 +185,14 @@ class MockBillsRepository implements BillsRepository {
     }
     final live = _liveLookup;
     if (live != null) {
-      return live.verifySmartcard(
-        provider: provider,
-        smartcardNumber: smartcardNumber,
-      );
+      try {
+        return await live.verifySmartcard(
+          provider: provider,
+          smartcardNumber: smartcardNumber,
+        );
+      } on LookupUnavailableException {
+        // Fall back to the simulated lookup below.
+      }
     }
     await _network.roundTrip();
     return _lookup('${provider.name}$smartcardNumber', withAddress: false);

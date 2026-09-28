@@ -44,7 +44,15 @@ class MockTransferRepository implements TransferRepository {
     }
     final live = _liveNameEnquiry;
     if (live != null && !bank.isInternal) {
-      return live.resolve(bankCode: bank.code, accountNumber: accountNumber);
+      try {
+        return await live.resolve(
+          bankCode: bank.code,
+          accountNumber: accountNumber,
+        );
+      } on LookupUnavailableException {
+        // Provider quota or key trouble: keep the flow working with the
+        // simulated lookup rather than showing an error.
+      }
     }
     await _network.roundTrip();
     return mockAccountName(bank, accountNumber);

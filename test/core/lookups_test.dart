@@ -55,6 +55,41 @@ void main() {
       );
     });
 
+    test('a quota refusal is LookupUnavailable, not "not found"', () async {
+      final paystack = PaystackNameEnquiry(
+        MockClient(
+          (_) async => json({
+            'status': false,
+            'message':
+                'Test mode daily limit of 3 live bank resolves exceeded.',
+          }, 429),
+        ),
+        'k',
+      );
+      await expectLater(
+        paystack.resolve(bankCode: '058', accountNumber: '0123456789'),
+        throwsA(isA<LookupUnavailableException>()),
+      );
+    });
+
+    test('repeat lookups are served from memory', () async {
+      var calls = 0;
+      final paystack = PaystackNameEnquiry(
+        MockClient((_) async {
+          calls++;
+          return json({
+            'status': true,
+            'data': {'account_name': 'Musa Bello'},
+          }, 200);
+        }),
+        'k',
+      );
+      for (var i = 0; i < 3; i++) {
+        await paystack.resolve(bankCode: '058', accountNumber: '0123456789');
+      }
+      expect(calls, 1);
+    });
+
     test('maps connection failures to NetworkException', () async {
       final paystack = PaystackNameEnquiry(
         MockClient((_) async => throw http.ClientException('offline')),
