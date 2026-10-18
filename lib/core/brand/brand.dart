@@ -24,6 +24,7 @@ class Brand {
     this.heroImageAsset,
     this.heroAlignment = Alignment.center,
     this.hasMortgages = false,
+    this.letterhead,
   });
 
   final String id;
@@ -69,6 +70,10 @@ class Brand {
 
   final bool hasMortgages;
 
+  /// The bank's official letterhead. When set, account statements use the
+  /// bank's classic printed layout instead of the app's modern one.
+  final Letterhead? letterhead;
+
   TextTheme textTheme(TextTheme base) =>
       GoogleFonts.getTextTheme(fontFamily, base);
 
@@ -113,6 +118,27 @@ class Brand {
     logoAsset: 'assets/brands/cmb/logo.jpg',
     promoBannerAsset: 'assets/brands/cmb/promo_home_ownership.jpg',
     hasMortgages: true,
+    // From the bank's printed statements.
+    letterhead: Letterhead(
+      legalName: 'COOPERATIVE MORTGAGE BANK LIMITED',
+      rcNumber: 'RC 210930',
+      branch: 'BODIJA BRANCH',
+      addressLines: [
+        '11B, University Crescent,',
+        'UI-Secretariat Road,',
+        'Bodija, Ibadan, Oyo State.',
+      ],
+      phone: 'Tel: 08158793019, 09154138207',
+      website: 'www.cmbankng.com',
+      email: 'info@cmbankng.com',
+      tagline: '...committed to giving you more',
+      directors:
+          'DIRECTORS: Mr. Olufemi Adewole (Chairman), Mr. Hakeem '
+          'Ikumogunniyi (Ag. MD/CEO), High Chief Tajudeen Ayeola, Elder Felix '
+          'Ajibode, Dr. Babatunde Obrimah, Ms. Kudi Badmus, Ahmadu Tijjani '
+          'Abbas',
+      accountType: 'COOP REGULAR SAVINGS ACCOUNT',
+    ),
   );
 
   static final Brand current = switch (const String.fromEnvironment(
@@ -122,4 +148,34 @@ class Brand {
     'cmb' => cmb,
     _ => tally,
   };
+}
+
+/// A bank's printed letterhead, used on statements.
+@immutable
+class Letterhead {
+  const Letterhead({
+    required this.legalName,
+    required this.rcNumber,
+    required this.branch,
+    required this.addressLines,
+    required this.phone,
+    required this.website,
+    required this.email,
+    required this.tagline,
+    required this.directors,
+    required this.accountType,
+  });
+
+  final String legalName;
+  final String rcNumber;
+  final String branch;
+  final List<String> addressLines;
+  final String phone;
+  final String website;
+  final String email;
+  final String tagline;
+  final String directors;
+
+  /// Product name printed on statements, e.g. "COOP REGULAR SAVINGS ACCOUNT".
+  final String accountType;
 }

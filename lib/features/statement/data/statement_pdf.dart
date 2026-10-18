@@ -9,6 +9,7 @@ import '../../account/domain/account.dart';
 import '../../profile/domain/customer_profile.dart';
 import '../../transactions/presentation/widgets/transaction_tile.dart';
 import '../domain/statement.dart';
+import 'statement_pdf_classic.dart';
 
 final _date = DateFormat('d MMM yyyy');
 final _dateTime = DateFormat('d MMM yyyy, HH:mm');
@@ -20,8 +21,19 @@ Future<Uint8List> buildStatementPdf({
   required Statement statement,
   required Account account,
   CustomerProfile? profile,
+  Money? loanBalance,
 }) async {
   final brand = Brand.current;
+  final letterhead = brand.letterhead;
+  if (letterhead != null) {
+    return buildClassicStatementPdf(
+      statement: statement,
+      account: account,
+      letterhead: letterhead,
+      profile: profile,
+      loanBalance: loanBalance,
+    );
+  }
   final primary = PdfColor.fromInt(brand.primary.toARGB32());
   final muted = const PdfColor.fromInt(0xFF5E6B63);
   final logoAsset = brand.logoAsset;

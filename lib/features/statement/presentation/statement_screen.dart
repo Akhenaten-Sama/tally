@@ -10,6 +10,7 @@ import '../../../core/brand/brand.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/theme/tally_colors.dart';
 import '../../account/data/account_repository.dart';
+import '../../mortgage/data/mortgage_repository.dart';
 import '../../profile/data/profile_repository.dart';
 import '../../transactions/data/transaction_repository.dart';
 import '../data/statement_pdf.dart';
@@ -86,6 +87,7 @@ class _StatementScreenState extends ConsumerState<StatementScreen> {
         statement: statement,
         account: account,
         profile: ref.read(customerProfileProvider).value,
+        loanBalance: ref.read(mortgageProvider).value?.outstanding,
       );
       final dir = await getTemporaryDirectory();
       final name =
