@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../../core/money/money.dart';
 import '../../auth/data/transaction_pin_repository.dart';
@@ -9,6 +8,7 @@ import '../data/transfer_repository.dart';
 import '../domain/amount_input.dart';
 import '../domain/bank.dart';
 import '../domain/transfer.dart';
+import '../../../core/utils/references.dart';
 
 part 'send_money_controller.freezed.dart';
 
@@ -78,7 +78,7 @@ class SendMoneyController extends Notifier<SendMoneyDraft> {
   Future<BankTransaction> submitWithBiometrics() => _send();
 
   Future<BankTransaction> _send() {
-    final reference = state.reference ?? _newReference();
+    final reference = state.reference ?? newReference();
     state = state.copyWith(reference: reference);
 
     return ref
@@ -99,9 +99,6 @@ class SendMoneyController extends Notifier<SendMoneyDraft> {
     if (amount == state.amount) return;
     state = state.copyWith(amount: amount, reference: null);
   }
-
-  static String _newReference() =>
-      'TALLY${const Uuid().v4().replaceAll('-', '').substring(0, 16).toUpperCase()}';
 }
 
 /// Lives only while the send flow is on screen; the next flow starts fresh.

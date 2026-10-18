@@ -11,6 +11,7 @@ import '../money/money.dart';
 import '../network/mock_network.dart';
 import 'database.dart';
 import 'mappers.dart';
+import '../utils/references.dart';
 
 /// Money leaving the account for an outside party (a bank, a biller).
 class LedgerDebit {
@@ -180,7 +181,7 @@ class MockLedger {
           TransactionsCompanion.insert(
             id: _uuid.v4(),
             accountId: txn.accountId,
-            reference: '${txn.reference}-rev',
+            reference: reversalReference(txn.reference),
             direction: TxnDirection.credit,
             category: TxnCategory.reversal,
             status: TxnStatus.successful,

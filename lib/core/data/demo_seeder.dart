@@ -7,10 +7,12 @@ import '../../features/transfers/data/mock_directory.dart';
 import '../../features/transfers/domain/bank.dart';
 import '../../features/mortgage/domain/amortization.dart';
 import '../../features/mortgage/domain/mortgage.dart';
+import '../../features/transfers/domain/transfer.dart';
 import '../money/money.dart';
+import '../utils/references.dart';
 import 'database.dart';
 
-/// Fills a fresh install with a believable month of activity.
+/// Fills a fresh install with two believable months of activity.
 class DemoSeeder {
   DemoSeeder(this._db, {DateTime Function()? clock})
     : _clock = clock ?? DateTime.now;
@@ -30,11 +32,11 @@ class DemoSeeder {
   static const bvnLast4 = '4821';
 
   /// In kobo (₦1 = 100 kobo), never a decimal.
-  static const openingBalanceKobo = 1378956423; // ₦12,789,564.23
+  static const openingBalanceKobo = 1878956423; // ₦18,789,564.23
 
   /// Bump after changing any seed data above to reset installed apps to it
   /// on next launch. Transfers made in the app are wiped when this changes.
-  static const seedVersion = 7;
+  static const seedVersion = 9;
   static const _seedVersionKey = 'seed_version';
 
   Future<void> ensureSeeded() async {
@@ -125,36 +127,40 @@ class DemoSeeder {
           ),
         );
 
-    final last = mortgage.schedule[paid - 1];
-    await _db
-        .into(_db.transactions)
-        .insert(
-          TransactionsCompanion.insert(
-            id: 'seed_mortgage_$paid',
-            accountId: accountId,
-            reference: 'CMB-MTG-${last.number.toString().padLeft(3, '0')}',
-            direction: TxnDirection.debit,
-            category: TxnCategory.mortgage,
-            status: TxnStatus.successful,
-            amountKobo: last.payment.kobo,
-            narration: Value('Payment ${last.number} of 240'),
-            counterpartyName: 'Mortgage repayment',
-            counterpartyAccount: Value(mortgage.propertyName),
-            counterpartyBank: Value(mortgage.product.name),
-            createdAt: last.dueDate.add(const Duration(hours: 9)),
-          ),
-        );
+    // The last two monthly repayments fall inside the demo history.
+    final random = Random(91);
+    for (final installment in mortgage.schedule.sublist(paid - 2, paid)) {
+      await _db
+          .into(_db.transactions)
+          .insert(
+            TransactionsCompanion.insert(
+              id: 'seed_mortgage_${installment.number}',
+              accountId: accountId,
+              reference: newReference(random: random),
+              direction: TxnDirection.debit,
+              category: TxnCategory.mortgage,
+              status: TxnStatus.successful,
+              amountKobo: installment.payment.kobo,
+              narration: Value('Payment ${installment.number} of 240'),
+              counterpartyName: 'Mortgage repayment',
+              counterpartyAccount: Value(mortgage.propertyName),
+              counterpartyBank: Value(mortgage.product.name),
+              createdAt: installment.dueDate.add(const Duration(hours: 9)),
+            ),
+          );
+    }
   }
 
+  /// About 60 days of everyday activity, newest last.
   List<TransactionsCompanion> _history() {
-    // Fixed seed: every reviewer sees the same account.
-    final random = Random(7);
+    // Fixed seed: every install sees the same account.
+    final random = Random(9);
     final now = _clock();
     final entries = <TransactionsCompanion>[];
     var n = 0;
 
     TransactionsCompanion entry({
-      required int daysAgo,
+      required DateTime at,
       required TxnDirection direction,
       required TxnCategory category,
       required int amountKobo,
@@ -164,22 +170,13 @@ class DemoSeeder {
       String narration = '',
       String? account,
       String? bank,
-      Duration? ago,
+      String? reference,
     }) {
       n++;
-      final at = ago != null
-          ? now.subtract(ago)
-          : now.subtract(
-              Duration(
-                days: daysAgo,
-                hours: daysAgo == 0 ? 0 : random.nextInt(12),
-                minutes: 5 + random.nextInt(50),
-              ),
-            );
       return TransactionsCompanion.insert(
         id: 'seed_$n',
         accountId: accountId,
-        reference: 'TALLY-SEED-${n.toString().padLeft(4, '0')}',
+        reference: reference ?? newReference(random: random),
         direction: direction,
         category: category,
         status: status,
@@ -193,99 +190,132 @@ class DemoSeeder {
       );
     }
 
+    DateTime dayAt(int daysAgo) {
+      final day = now.subtract(Duration(days: daysAgo));
+      return DateTime(
+        day.year,
+        day.month,
+        day.day,
+        8 + random.nextInt(12),
+        random.nextInt(60),
+      );
+    }
+
     String person() =>
         '${lastNames[random.nextInt(lastNames.length)]} '
+                '${firstNames[random.nextInt(firstNames.length)]} '
                 '${firstNames[random.nextInt(firstNames.length)]}'
             .toUpperCase();
 
     String accountNo() => List.generate(10, (_) => random.nextInt(10)).join();
 
-    Bank bank() => Bank.all[1 + random.nextInt(Bank.all.length - 1)];
+    Bank otherBank() => Bank.all[1 + random.nextInt(Bank.all.length - 1)];
 
-    entries.add(
-      entry(
-        daysAgo: 27,
-        direction: TxnDirection.credit,
-        category: TxnCategory.transfer,
-        amountKobo: 45000000,
-        counterparty: 'BRIGHTPATH TECHNOLOGIES LTD',
-        narration: 'Salary',
-        bank: 'Zenith Bank',
-      ),
-    );
+    const window = 60;
 
-    for (var day = 26; day >= 1; day--) {
-      final roll = random.nextInt(10);
-      if (roll < 4) {
-        final b = bank();
+    // Salary on the 28th of each month in the window.
+    for (var daysAgo = window; daysAgo >= 1; daysAgo--) {
+      final day = now.subtract(Duration(days: daysAgo));
+      if (day.day == 28) {
         entries.add(
           entry(
-            daysAgo: day,
-            direction: TxnDirection.debit,
-            category: TxnCategory.transfer,
-            amountKobo: (2 + random.nextInt(40)) * 100000,
-            feeKobo: 2688,
-            counterparty: person(),
-            account: accountNo(),
-            bank: b.name,
-          ),
-        );
-      } else if (roll < 6) {
-        final network = ['MTN', 'Airtel', 'Glo', '9mobile'][random.nextInt(4)];
-        final isData = random.nextBool();
-        entries.add(
-          entry(
-            daysAgo: day,
-            direction: TxnDirection.debit,
-            category: isData ? TxnCategory.data : TxnCategory.airtime,
-            amountKobo: isData ? 350000 : 100000 * (1 + random.nextInt(5)),
-            counterparty: '$network ${isData ? 'Data' : 'Airtime'}',
-            account: '0803${1000000 + random.nextInt(8999999)}',
-          ),
-        );
-      } else if (roll < 8) {
-        entries.add(
-          entry(
-            daysAgo: day,
+            at: DateTime(day.year, day.month, day.day, 10, 12),
             direction: TxnDirection.credit,
             category: TxnCategory.transfer,
-            amountKobo: (5 + random.nextInt(60)) * 100000,
-            counterparty: person(),
-            account: accountNo(),
-            bank: bank().name,
+            amountKobo: 45000000,
+            counterparty: 'BRIGHTPATH TECHNOLOGIES LTD',
+            narration: 'Salary Transfer Payment',
+            account: '1012345678',
+            bank: 'Zenith Bank',
           ),
         );
       }
     }
 
+    // Everyday activity.
+    for (var daysAgo = window; daysAgo >= 1; daysAgo--) {
+      final roll = random.nextInt(10);
+      if (roll < 4) {
+        final bank = otherBank();
+        final amount = Money((2 + random.nextInt(60)) * 250000);
+        entries.add(
+          entry(
+            at: dayAt(daysAgo),
+            direction: TxnDirection.debit,
+            category: TxnCategory.transfer,
+            amountKobo: amount.kobo,
+            feeKobo: transferFee(amount, bank: bank).kobo,
+            counterparty: person(),
+            account: accountNo(),
+            bank: bank.name,
+          ),
+        );
+      } else if (roll < 6) {
+        entries.add(
+          entry(
+            at: dayAt(daysAgo),
+            direction: TxnDirection.credit,
+            category: TxnCategory.transfer,
+            amountKobo: (5 + random.nextInt(60)) * 100000,
+            counterparty: person(),
+            account: accountNo(),
+            bank: otherBank().name,
+          ),
+        );
+      } else if (roll < 8) {
+        final network = ['MTN', 'Airtel', 'Glo', '9mobile'][random.nextInt(4)];
+        final isData = random.nextBool();
+        entries.add(
+          entry(
+            at: dayAt(daysAgo),
+            direction: TxnDirection.debit,
+            category: isData ? TxnCategory.data : TxnCategory.airtime,
+            amountKobo: isData ? 300000 : 100000 * (1 + random.nextInt(5)),
+            counterparty: '$network ${isData ? 'Data' : 'Airtime'}',
+            narration: isData ? '3.5GB · 30 days' : '',
+            account: '0803${1000000 + random.nextInt(8999999)}',
+          ),
+        );
+      }
+    }
+
+    // Monthly bills and interest, roughly a month apart.
+    for (final daysAgo in [44, 14]) {
+      entries.addAll([
+        entry(
+          at: dayAt(daysAgo),
+          direction: TxnDirection.debit,
+          category: TxnCategory.cable,
+          amountKobo: 1900000,
+          counterparty: 'DStv Compact',
+          narration: 'Compact · 1 month',
+          account: '7023418890',
+        ),
+        entry(
+          at: dayAt(daysAgo - 8),
+          direction: TxnDirection.debit,
+          category: TxnCategory.electricity,
+          amountKobo: 2000000,
+          counterparty: 'Ikeja Electric (Prepaid)',
+          narration: '4821-0937-5512-6640-1873 · 95.5 kWh',
+          account: '45071239981',
+        ),
+        entry(
+          at: dayAt(daysAgo - 11),
+          direction: TxnDirection.credit,
+          category: TxnCategory.interest,
+          amountKobo: 41250,
+          counterparty: 'Interest: Savings',
+        ),
+      ]);
+    }
+
+    // A transfer that failed and was refunded a few minutes later.
+    final failedAt = now.subtract(const Duration(days: 2, hours: 3));
+    final failedRef = newReference(random: random);
     entries.addAll([
       entry(
-        daysAgo: 12,
-        direction: TxnDirection.debit,
-        category: TxnCategory.cable,
-        amountKobo: 1570000,
-        counterparty: 'DStv Compact',
-        account: '7023418890',
-      ),
-      entry(
-        daysAgo: 6,
-        direction: TxnDirection.debit,
-        category: TxnCategory.electricity,
-        amountKobo: 2000000,
-        counterparty: 'Ikeja Electric (Prepaid)',
-        account: '45071239981',
-      ),
-      entry(
-        daysAgo: 3,
-        direction: TxnDirection.credit,
-        category: TxnCategory.interest,
-        amountKobo: 41250,
-        counterparty: 'Interest: Rent goal',
-      ),
-      // A transfer that failed and was refunded.
-      entry(
-        daysAgo: 2,
-        ago: const Duration(days: 2, hours: 3),
+        at: failedAt,
         direction: TxnDirection.debit,
         category: TxnCategory.transfer,
         status: TxnStatus.reversed,
@@ -294,15 +324,18 @@ class DemoSeeder {
         counterparty: 'ADEBAYO FOLAKE',
         account: '0123456789',
         bank: 'Guaranty Trust Bank',
+        reference: failedRef,
       ),
       entry(
-        daysAgo: 2,
-        ago: const Duration(days: 2, hours: 2, minutes: 48),
+        at: failedAt.add(const Duration(minutes: 12)),
         direction: TxnDirection.credit,
         category: TxnCategory.reversal,
         amountKobo: 5002688,
         counterparty: 'Reversal: ADEBAYO FOLAKE',
         narration: 'Refund for failed transfer',
+        account: '0123456789',
+        bank: 'Guaranty Trust Bank',
+        reference: reversalReference(failedRef),
       ),
     ]);
 
